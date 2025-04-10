@@ -1,5 +1,5 @@
 <?php
-define('DB_HOST', 'localhost:3306');
+define('DB_HOST', 'localhost:3309'); // Tùy port ở cấu hình của các bạn để chỉnh sửa có thể là 3306 hoặc 3307
 define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAME', 'bandothucong');

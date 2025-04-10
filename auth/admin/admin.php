@@ -140,7 +140,52 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <!-- Order data will be loaded here -->
+                                            <?php
+                                                require_once("controller/OrderController.php");
+                                                $orderController = new OrderController();
+                                                $orders = $orderController->getAll();
+                                                
+                                                if ($orders && mysqli_num_rows($orders) > 0) {
+                                                    while($order = mysqli_fetch_assoc($orders)) {
+                                                        $statusClass = $order['status'] == 'Pending' ? 'text-warning' : 'text-success';
+                                                        // Tính tổng tiền từ chi tiết đơn hàng nếu không có total_amount trực tiếp
+                                                        $details_result = $orderController->getOrderDetails($order['id']);
+                                                        $total_amount = 0;
+                                                        if ($details_result && mysqli_num_rows($details_result) > 0) {
+                                                            while ($detail = mysqli_fetch_assoc($details_result)) {
+                                                                $total_amount += $detail['total_money'];
+                                                            }
+                                                        }
+                                            ?>
+                                            <tr>
+                                                <td>#<?php echo $order['id']; ?></td>
+                                                <td>
+                                                    <?php echo $order['full_name']; ?><br>
+                                                </td>
+                                                <td><?php echo number_format($total_amount); ?> VNĐ</td>
+                                                <td><span class="<?php echo $statusClass; ?>"><?php echo $order['status']; ?></span></td>
+                                                <td>
+                                                    <button class="btn btn-sm btn-info mb-1" onclick="viewOrder(<?php echo $order['id']; ?>)">
+                                                        <i class="bi bi-eye"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-primary mb-1" onclick="updateOrderStatus(<?php echo $order['id']; ?>)">
+                                                        <i class="bi bi-pencil"></i>
+                                                    </button>
+                                                    <button class="btn btn-sm btn-danger" onclick="deleteOrder(<?php echo $order['id']; ?>)">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                            <?php
+                                                    }
+                                                } else {
+                                            ?>
+                                            <tr>
+                                                <td colspan="5" class="text-center">Không có đơn hàng nào</td>
+                                            </tr>
+                                            <?php
+                                                }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
@@ -361,6 +406,69 @@
             </div>
         </div>
 
+        <!-- Modal Xem chi tiết đơn hàng -->
+        <div class="modal fade" id="viewOrderModal" tabindex="-1" aria-labelledby="viewOrderModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewOrderModalLabel">Chi tiết đơn hàng</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div id="orderDetails">
+                            <p><strong>Mã đơn hàng:</strong> <span id="orderId"></span></p>
+                            <p><strong>Khách hàng:</strong> <span id="orderCustomer"></span></p>
+                            <p><strong>Ngày đặt hàng:</strong> <span id="orderDate"></span></p>
+                            <p><strong>Trạng thái:</strong> <span id="orderStatus"></span></p>
+                            <h6>Chi tiết sản phẩm:</h6>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Tên sản phẩm</th>
+                                        <th>Số lượng</th>
+                                        <th>Giá</th>
+                                        <th>Tổng</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="orderItems"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal Cập nhật trạng thái đơn hàng -->
+        <div class="modal fade" id="updateOrderStatusModal" tabindex="-1" aria-labelledby="updateOrderStatusModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="updateOrderStatusModalLabel">Cập nhật trạng thái đơn hàng</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="updateOrderStatusForm">
+                            <input type="hidden" id="updateOrderId" name="id">
+                            <div class="mb-3">
+                                <label for="updateOrderStatusSelect" class="form-label">Chọn trạng thái</label>
+                                <select class="form-select" id="updateOrderStatusSelect" name="status" required>
+                                    <option value="Pending">Đang xử lý</option>
+                                    <option value="Approved">Đã xác nhận</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+                        <button type="submit" form="updateOrderStatusForm" class="btn btn-primary">Cập nhật</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Modal sửa thông tin User -->
         <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -402,5 +510,8 @@
 
         <script src="./js/bootstrap.js"></script>
         <script src="./js/admin.js"></script>
+        <script src="./js/product.js"></script>
+        <script src="./js/order.js"></script>
+        <script src="./js/user.js"></script>
     </body>
 </html>

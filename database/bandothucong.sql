@@ -41,11 +41,11 @@ CREATE TABLE `Category` (
 );
 
 INSERT INTO `Category`(`id`, `name`, `thumbnail`) VALUES
-(1, 'Mugs', '../img/menu_Mugs.jpg'),
-(2, 'Pots', '../img/menu_Pots.jpg'),
-(3, 'Plates', '../img/menu_Plates.jpg'),
-(4, 'Decor', '../img/menu_Decor.jpg'),
-(5, 'Bowls', '../img/menu_Bowls.jpg');
+(1, 'Cốc', '../img/menu_Mugs.jpg'),
+(2, 'Chậu', '../img/menu_Pots.jpg'),
+(3, 'Đĩa', '../img/menu_Plates.jpg'),
+(4, 'Trang Trí', '../img/menu_Decor.jpg'),
+(5, 'Bát', '../img/menu_Bowls.jpg');
 
 
 -- Sản phẩm
