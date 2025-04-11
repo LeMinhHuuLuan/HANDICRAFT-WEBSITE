@@ -22,7 +22,7 @@
                          <div class="left-text">
                              <a href="index.php">Trang chủ</a>
                              <a href="shop.php">Cửa Hàng</a>
-                             <a href="aboutus.html">Giới thiệu</a>
+                             <a href="aboutus.php">Giới thiệu</a>
                          </div>
                      </div>
      

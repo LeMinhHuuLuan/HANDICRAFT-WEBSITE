@@ -14,7 +14,7 @@ if ($checkCookie != null): ?>
             <?php endif; ?>
             <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger" href="/handicraft/auth/backend/logoutCookie.php">Đăng Xuất</a></li>
+            <li><a class="dropdown-item text-danger" href="./auth/backend/logoutCookie.php">Đăng Xuất</a></li>
         </ul>
     </div>
 <?php else: ?>

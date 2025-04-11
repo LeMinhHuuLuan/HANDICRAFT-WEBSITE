@@ -1,7 +1,5 @@
 <?php
-  include("header.php");
   require_once("./auth/backend/auth.php");
-
   // Ensure this code does not interfere with the rest of the page
   if (!isset($_SESSION['user_logged_in'])) {
     require_once("auth/backend/filterWithCookie.php");
@@ -9,71 +7,34 @@
 ?>
 
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="en">
   <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - Woodmart</title>
-    <style>
-      .container{
-        margin-top: 100px;
-        margin-left: auto;
-        margin-right: auto;
-        max-width: 400px;
-        padding: 20px;
-        border-radius: 10px;
-      }
-
-      h1{
-        text-align: center;
-        margin-bottom: 20px;
-      }
-
-      .form-control {
-        border-radius: 10px;
-        padding: 10px;
-      }
-
-      .btn-primary{
-        width: 100%;
-        border-radius: 10px;
-        padding: 10px;
-      }
-
-      .txt_field{
-        margin-bottom: 15px;
-      }
-
-
-    </style>
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="css/login.css">
+    <title>Sign In</title>
   </head>
   <body>
     <div class="container">
-      <div class="center">
-        <h1>Login</h1>
-        <form method="post">
-          <div class="txt_field">
-            <input type="text" class="form-control" name="user_name" required />
-            <span></span>
-            <label>Username</label>
-          </div>
-          <div class="txt_field">
-            <input type="password" class="form-control" name="password" required />
-            <span></span>
-            <label>Password</label>
-          </div>
-          <div class="pass">Forgot Password?</div>
-          <input type="submit" class="btn-primary" value="Login" name="submit" />
-          <div class="signup_link">Not a member? <a href="./register.php">Signup</a></div>
-        </form>
-      </div>
+      <h2>Đăng Nhập</h2>
+      <form method="POST">
+        <label>Tên Đăng Nhập</label>
+        <input type="text" placeholder="Username" name="user_name" require />
+        <label>Mật Khẩu</label>
+        <input type="password" placeholder="Password" name="password" require />
+        <input type="submit" class="login_button" value="Đăng Nhập" name="submit" />
+        <div class="register">
+          <a href="./index.php">Trở Về Trang Chủ</a>
+          <p>Chưa Có Tài Khoản?</p>
+          <a href="./register.php">Đăng Ký Ngay</a>
+        </div>
+      </form>
     </div>
   </body>
 </html>
 
-<?php
-  include("footer.php");
-      
+<?php 
   if(isset($_POST['submit'])){
     $run = Auth::login($_POST['user_name'],$_POST['password']);
     if($run){

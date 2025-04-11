@@ -1,27 +1,25 @@
 // Handle navigation
-document.addEventListener('DOMContentLoaded', function() {
-    const navLinks = document.querySelectorAll('.nav-link');
-    const sections = document.querySelectorAll('.content-section');
+document.querySelectorAll(".nav-link[data-section]").forEach((link) => {  // Thêm [data-section] để chỉ bắt các link trong menu
+    link.addEventListener("click", (e) => {
+        e.preventDefault();
 
-    navLinks.forEach(link => {
-        link.addEventListener('click', function(e) {
-            e.preventDefault();
-            const sectionId = this.getAttribute('data-section');
+        // Kiểm tra sự tồn tại của các phần tử trước khi thao tác
+        const sections = document.querySelectorAll(".content-section");
+        if (sections) {
+            sections.forEach((s) => s.classList.remove("active"));
+        }
+        const navLinks = document.querySelectorAll(".nav-link");
+        if (navLinks) {
+            navLinks.forEach((l) => l.classList.remove("active"));
+        }
 
-            // Ẩn tất cả các section
-            sections.forEach(section => {
-                section.classList.remove('active');
-            });
-
-            // Xóa class active khỏi tất cả nav-link
-            navLinks.forEach(nav => {
-                nav.classList.remove('active');
-            });
-
-            // Hiển thị section được chọn và thêm class active cho nav-link
-            document.getElementById(sectionId).classList.add('active');
-            this.classList.add('active');
-        });
+        // Thêm class "active" vào mục đã click
+        link.classList.add("active");
+        const sectionId = link.getAttribute("data-section");
+        const section = document.getElementById(sectionId);
+        if (section) {
+            section.classList.add("active");
+        }
     });
 });
 
