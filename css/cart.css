@@ -1,11 +1,11 @@
 .cart-container {
-     background: #ddd; /* Chuyển từ body */
-     min-height: 100vh; /* Chuyển từ body */
-     display: flex; /* Chuyển từ body */
-     font-family: sans-serif; /* Chuyển từ body */
-     font-size: 0.8rem; /* Chuyển từ body */
-     font-weight: bold; /* Chuyển từ body */
-     padding-top: 80px; /* Thêm để tránh bị header fixed che */
+     background: #ddd;
+     min-height: 100vh; 
+     display: flex; 
+     font-family: sans-serif; 
+     font-size: 0.8rem; 
+     font-weight: bold; 
+     padding-top: 80px;
  }
  
  .cart-container .title {
@@ -155,8 +155,6 @@
      box-shadow: none;
      outline: none;
      color: white;
-     -webkit-box-shadow: none;
-     -webkit-user-select: none;
      transition: none;
  }
  
