@@ -1,9 +1,6 @@
-body {
+.menu {
     margin: 0;
     font-family: Arial, sans-serif;
-}
-
-.menu {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -55,8 +52,8 @@ body {
     align-items: center;
     justify-content: flex-end;
     gap: 20px;
-    min-width: 250px; 
-    padding-right: 80px; 
+    min-width: 250px;
+    padding-right: 80px;
 }
 
 .right-text a {
@@ -94,8 +91,8 @@ body {
 }
 
 .right-text .dropdown-menu .dropdown-item:active {
-    background-color: #cac5c5 !important; 
-    color: black !important; 
+    background-color: #cac5c5 !important;
+    color: black !important;
 }
 
 .menu-left,

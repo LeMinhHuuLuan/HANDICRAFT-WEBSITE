@@ -15,37 +15,27 @@
 </head>
 
 <body>
-     <header class="header">
-                 <!-- Menu-->
-                 <div class="menu">
-                     <div class="menu-left">
-                         <div class="left-text">
-                             <a href="index.php">Trang chủ</a>
-                             <a href="shop.php">Cửa Hàng</a>
-                             <a href="aboutus.php">Giới thiệu</a>
-                         </div>
-                     </div>
-     
-                     <!-- Logo ở giữa -->
-                     <div class="logo">
-                         <a href="index.php"
-                             ><img src="./img/w-hmp-logo-full-dark.svg" alt="Logo"
-                         /></a>
-                     </div>
-     
-                     <div class="menu-right">
-                         <!-- Tác vụ bên phải -->
-                         <div class="right-text">
-                            <a href="#"><i class="fa-solid fa-magnifying-glass"></i> Tìm Kiếm</a>
-                            <a href="#cart"><i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng</a>
-                            <?php
-                                require_once("auth/backend/filterWithCookie.php");
-                            ?>
-                         </div>
-                     </div>
-                 </div>
-             </header>
-
+    <header class="header">
+        <div class="menu">
+            <div class="menu-left">
+                <div class="left-text">
+                    <a href="index.php">Trang chủ</a>
+                    <a href="shop.php">Cửa Hàng</a>
+                    <a href="aboutus.php">Giới thiệu</a>
+                </div>
+            </div>
+            <div class="logo">
+                <a href="index.php"><img src="./img/w-hmp-logo-full-dark.svg" alt="Logo"/></a>
+            </div>
+            <div class="menu-right">
+                <div class="right-text">
+                    <a href="#"><i class="fa-solid fa-magnifying-glass"></i> Tìm Kiếm</a>
+                    <a href="./cart.php"><i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng</a>
+                    <?php require_once("auth/backend/filterWithCookie.php"); ?>
+                </div>
+            </div>
+        </div>
+    </header>
             
              <script src="./js/menu.js"></script>
              <script src="./js/bootstrap_banner_slide.js"></script>
