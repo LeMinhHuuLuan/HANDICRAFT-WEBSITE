@@ -38,7 +38,7 @@ body {
      padding: 80px; /* Tăng khoảng cách bên trong */
      border-radius: 8px;
      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-     width: 500px; /* Tăng chiều rộng */
+     width: 350px; /* Tăng chiều rộng */
      animation: fadeIn 1s ease-in-out;
    }
    h2 {
