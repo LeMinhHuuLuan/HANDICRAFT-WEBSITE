@@ -111,10 +111,17 @@
                     }
 
                     // Nếu có ảnh mới thì upload ảnh
-                    $product_image = "";
+                    $result = $productController->getById($id);
+                    if (!$result || mysqli_num_rows($result) == 0) {
+                        echo json_encode(['success' => false, 'message' => 'Sản phẩm không tồn tại.']);
+                        exit;
+                    }
+                    $product = mysqli_fetch_assoc($result);
+                    $product_image = $product['product_image']; // Giữ ảnh cũ mặc định
+
+                    // Nếu có ảnh mới thì upload và xóa ảnh cũ
                     if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
-                        // Upload ảnh mới nếu có
-                        $product_image = $productController->uploadImage($_FILES['product_image']);
+                        $product_image = $productController->uploadImage($_FILES['product_image'], $product['product_image']);
                         if (!$product_image) {
                             echo json_encode(['success' => false, 'message' => 'Lỗi khi upload ảnh mới.']);
                             exit;
