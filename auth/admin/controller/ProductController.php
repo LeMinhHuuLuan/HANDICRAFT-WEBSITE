@@ -96,23 +96,18 @@
             // Escape các tham số
             $name = mysqli_real_escape_string($conn, $name);
             $description = mysqli_real_escape_string($conn, $description);
+            $product_image = mysqli_real_escape_string($conn, $product_image);
             
-            $image_update = "";
-            if($product_image != "") {
-                $product_image = mysqli_real_escape_string($conn, $product_image);
-                $image_update = ", product_image = '$product_image'";
-            }
-    
             $sql = "UPDATE Product 
                     SET category_id = $category_id,
                         name = '$name',
                         price = $price,
                         sale_price = $sale_price,
+                        product_image = '$product_image',
                         description = '$description',
                         updated_at = '$updated_at'
-                        $image_update
                     WHERE id = $id"; 
-            return mysqli_query($conn, $sql); // Trả về kết quả query
+            return mysqli_query($conn, $sql);
         }
     
         // Đếm số sản phẩm theo danh mục
@@ -143,17 +138,21 @@
         }
     
         // Upload ảnh sản phẩm
-        public function uploadImage($file) {
+        public function uploadImage($file, $old_image = null) {
             $target_dir = __DIR__ . "/../../../uploads/products/";
             if (!file_exists($target_dir)) {
                 mkdir($target_dir, 0777, true);
             }
-    
+        
             $file_extension = strtolower(pathinfo($file["name"], PATHINFO_EXTENSION));
             $file_name = time() . '_' . uniqid() . '.' . $file_extension;
             $target_file = $target_dir . $file_name;
             
             if (move_uploaded_file($file["tmp_name"], $target_file)) {
+                // Xóa ảnh cũ nếu tồn tại
+                if ($old_image && file_exists(__DIR__ . "/../../../" . $old_image)) {
+                    unlink(__DIR__ . "/../../../" . $old_image);
+                }
                 return "uploads/products/" . $file_name;
             }
             return false;
