@@ -1,5 +1,23 @@
 <?php
-     require_once(__DIR__."/auth/backend/auth.php")
+    require_once(__DIR__."/auth/backend/auth.php");
+    require_once("./database/connect.php");
+
+    //Lấy số lượng sản phẩm trong giỏ hàng để hiện thi ra icon giỏ hàng
+    if (isset($_COOKIE['user_id'])) {
+        global $conn;
+        $user_id = $_COOKIE['user_id'];
+        // Truy vấn tổng số lượng sản phẩm trong giỏ hàng
+        $sql = "SELECT SUM(quantity) AS total_items FROM cart WHERE user_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_assoc();
+    
+        $total_items = $row['total_items'] ?? 0;
+    } else {
+        $total_items = 0; // Nếu chưa đăng nhập
+    }
 ?>
 
 <head>
@@ -30,7 +48,7 @@
             <div class="menu-right">
                 <div class="right-text">
                     <a href="#"><i class="fa-solid fa-magnifying-glass"></i> Tìm Kiếm</a>
-                    <a href="./cart.php"><i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng</a>
+                    <a href="./cart.php"><i class="fa-solid fa-cart-shopping"></i> Giỏ Hàng <span class="total_cart_num"><?= $total_items ?></span></a>
                     <?php require_once("auth/backend/filterWithCookie.php"); ?>
                 </div>
             </div>
