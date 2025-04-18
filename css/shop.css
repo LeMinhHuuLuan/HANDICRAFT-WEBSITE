@@ -256,7 +256,7 @@
     display: block;
     text-decoration: none;
     position: relative;
-    background-color: va    r(--white-color);
+    background-color: var(--white-color);
     border-radius: 2px;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
     transition: transform linear 0.1s;

@@ -317,8 +317,21 @@
                                 <textarea class="form-control" id="productDescription" name="description" rows="3"></textarea>
                             </div>
                             <div class="mb-3">
-                                <label for="productImages" class="form-label">Hình ảnh sản phẩm</label>
-                                <input type="file" class="form-control" id="productImages" name="product_image" multiple accept="image/*">
+                                <label class="form-label">Hình ảnh sản phẩm</label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="productMainImage" class="form-label">Ảnh chính</label>
+                                        <input type="file" class="form-control" id="productMainImage" name="product_image" accept="image/*" required>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="productImage2" class="form-label">Ảnh phụ 1</label>
+                                        <input type="file" class="form-control" id="productImage2" name="product_image_2" accept="image/*">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="productImage3" class="form-label">Ảnh phụ 2</label>
+                                        <input type="file" class="form-control" id="productImage3" name="product_image_3" accept="image/*">
+                                    </div>
+                                </div>
                             </div>
                             <input type="hidden" name="action" value="add_product">
                         </form>
@@ -388,12 +401,38 @@
                             </div>
                             <!-- Hình ảnh sản phẩm -->
                             <div class="mb-3">
-                                <label for="currentProductImage" class="form-label">Hình ảnh sản phẩm hiện tại</label>
-                                <img id="currentProductImage" src="" alt="Hình ảnh cũ" class="img-thumbnail" style="max-width: 200px;">
+                                <label class="form-label">Hình ảnh sản phẩm hiện tại</label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Ảnh chính</label>
+                                        <img id="currentProductImage" src="" alt="Ảnh chính" class="img-thumbnail" style="max-width: 200px;">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Ảnh phụ 1</label>
+                                        <img id="currentProductImage2" src="" alt="Ảnh phụ 1" class="img-thumbnail" style="max-width: 200px;">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>Ảnh phụ 2</label>
+                                        <img id="currentProductImage3" src="" alt="Ảnh phụ 2" class="img-thumbnail" style="max-width: 200px;">
+                                    </div>
+                                </div>
                             </div>
                             <div class="mb-3">
-                                <label for="editProductImage" class="form-label">Chọn hình ảnh mới</label>
-                                <input type="file" class="form-control" id="editProductImage" name="product_image" accept="image/*">
+                                <label class="form-label">Chọn hình ảnh mới</label>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label for="editProductImage" class="form-label">Ảnh chính mới</label>
+                                        <input type="file" class="form-control" id="editProductImage" name="product_image" accept="image/*">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="editProductImage2" class="form-label">Ảnh phụ 1 mới</label>
+                                        <input type="file" class="form-control" id="editProductImage2" name="product_image_2" accept="image/*">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="editProductImage3" class="form-label">Ảnh phụ 2 mới</label>
+                                        <input type="file" class="form-control" id="editProductImage3" name="product_image_3" accept="image/*">
+                                    </div>
+                                </div>
                             </div>
                             <input type="hidden" name="action" value="edit_product">
                         </form>

@@ -15,11 +15,24 @@
                     }
 
                     if (!isset($_FILES['product_image']) || $_FILES['product_image']['error'] !== UPLOAD_ERR_OK) {
-                        echo json_encode(['success' => false, 'message' => 'Vui lòng chọn ảnh sản phẩm hợp lệ.']);
+                        echo json_encode(['success' => false, 'message' => 'Vui lòng chọn ảnh sản phẩm chính hợp lệ.']);
                         exit;
                     }
  
+                    // Upload ảnh chính
                     $image_path = $productController->uploadImage($_FILES['product_image']);
+                    
+                    // Upload ảnh phụ 1
+                    $image_path_2 = '';
+                    if (isset($_FILES['product_image_2']) && $_FILES['product_image_2']['error'] === UPLOAD_ERR_OK) {
+                        $image_path_2 = $productController->uploadImage($_FILES['product_image_2']);
+                    }
+                    
+                    // Upload ảnh phụ 2
+                    $image_path_3 = '';
+                    if (isset($_FILES['product_image_3']) && $_FILES['product_image_3']['error'] === UPLOAD_ERR_OK) {
+                        $image_path_3 = $productController->uploadImage($_FILES['product_image_3']);
+                    }
                     
                     if ($image_path) {
                         $product_id = $productController->insert(
@@ -28,6 +41,8 @@
                             $_POST['price'],
                             $_POST['sale_price'],
                             $image_path,
+                            $image_path_2,
+                            $image_path_3,
                             $_POST['description']
                         );
                         
@@ -110,20 +125,35 @@
                         exit;
                     }
 
-                    // Nếu có ảnh mới thì upload ảnh
-                    $result = $productController->getById($id);
-                    if (!$result || mysqli_num_rows($result) == 0) {
-                        echo json_encode(['success' => false, 'message' => 'Sản phẩm không tồn tại.']);
-                        exit;
-                    }
+                    // Lấy thông tin sản phẩm hiện tại
                     $product = mysqli_fetch_assoc($result);
                     $product_image = $product['product_image']; // Giữ ảnh cũ mặc định
+                    $product_image_2 = $product['product_image_2']; // Giữ ảnh phụ 1 cũ
+                    $product_image_3 = $product['product_image_3']; // Giữ ảnh phụ 2 cũ
 
                     // Nếu có ảnh mới thì upload và xóa ảnh cũ
                     if (isset($_FILES['product_image']) && $_FILES['product_image']['error'] === UPLOAD_ERR_OK) {
                         $product_image = $productController->uploadImage($_FILES['product_image'], $product['product_image']);
                         if (!$product_image) {
-                            echo json_encode(['success' => false, 'message' => 'Lỗi khi upload ảnh mới.']);
+                            echo json_encode(['success' => false, 'message' => 'Lỗi khi upload ảnh chính mới.']);
+                            exit;
+                        }
+                    }
+
+                    // Xử lý ảnh phụ 1
+                    if (isset($_FILES['product_image_2']) && $_FILES['product_image_2']['error'] === UPLOAD_ERR_OK) {
+                        $product_image_2 = $productController->uploadImage($_FILES['product_image_2'], $product['product_image_2']);
+                        if (!$product_image_2) {
+                            echo json_encode(['success' => false, 'message' => 'Lỗi khi upload ảnh phụ 1 mới.']);
+                            exit;
+                        }
+                    }
+
+                    // Xử lý ảnh phụ 2
+                    if (isset($_FILES['product_image_3']) && $_FILES['product_image_3']['error'] === UPLOAD_ERR_OK) {
+                        $product_image_3 = $productController->uploadImage($_FILES['product_image_3'], $product['product_image_3']);
+                        if (!$product_image_3) {
+                            echo json_encode(['success' => false, 'message' => 'Lỗi khi upload ảnh phụ 2 mới.']);
                             exit;
                         }
                     }
@@ -135,7 +165,9 @@
                         $name,
                         $price,
                         $sale_price,
-                        $product_image,  // Nếu không có ảnh mới thì sẽ là rỗng
+                        $product_image,
+                        $product_image_2,
+                        $product_image_3,
                         $description
                     );
 

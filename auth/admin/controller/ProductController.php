@@ -2,7 +2,7 @@
     require_once(__DIR__."/../../../database/connect.php");
     class ProductController {
         // Thêm sản phẩm mới
-        public function insert($category_id, $name, $price, $sale_price, $product_image, $description) {
+        public function insert($category_id, $name, $price, $sale_price, $product_image, $product_image_2, $product_image_3, $description) {
             global $conn;
 
             if (empty($category_id) || empty($name) || empty($price) || empty($product_image)) {
@@ -16,9 +16,11 @@
             $name = mysqli_real_escape_string($conn, $name);
             $description = mysqli_real_escape_string($conn, $description);
             $product_image = mysqli_real_escape_string($conn, $product_image);
+            $product_image_2 = mysqli_real_escape_string($conn, $product_image_2);
+            $product_image_3 = mysqli_real_escape_string($conn, $product_image_3);
             
-            $sql = "INSERT INTO Product(category_id, name, price, sale_price, product_image, description, created_at, updated_at) 
-                    VALUES($category_id, '$name', $price, $sale_price, '$product_image', '$description', '$created_at', '$updated_at')"; 
+            $sql = "INSERT INTO Product(category_id, name, price, sale_price, product_image, product_image_2, product_image_3, description, created_at, updated_at) 
+                    VALUES($category_id, '$name', $price, $sale_price, '$product_image', '$product_image_2', '$product_image_3', '$description', '$created_at', '$updated_at')"; 
             
             if (!mysqli_query($conn, $sql)) {
                 error_log("SQL Error: " . mysqli_error($conn));
@@ -89,7 +91,7 @@
         }
     
         // Cập nhật sản phẩm
-        public function update($id, $category_id, $name, $price, $sale_price, $product_image, $description) {
+        public function update($id, $category_id, $name, $price, $sale_price, $product_image, $product_image_2, $product_image_3, $description) {
             global $conn;
             $updated_at = date('Y-m-d H:i:s');
             
@@ -97,6 +99,8 @@
             $name = mysqli_real_escape_string($conn, $name);
             $description = mysqli_real_escape_string($conn, $description);
             $product_image = mysqli_real_escape_string($conn, $product_image);
+            $product_image_2 = mysqli_real_escape_string($conn, $product_image_2);
+            $product_image_3 = mysqli_real_escape_string($conn, $product_image_3);
             
             $sql = "UPDATE Product 
                     SET category_id = $category_id,
@@ -104,6 +108,8 @@
                         price = $price,
                         sale_price = $sale_price,
                         product_image = '$product_image',
+                        product_image_2 = '$product_image_2',
+                        product_image_3 = '$product_image_3',
                         description = '$description',
                         updated_at = '$updated_at'
                     WHERE id = $id"; 

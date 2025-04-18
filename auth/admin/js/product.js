@@ -67,7 +67,7 @@ document.getElementById('addProductForm').addEventListener('submit', function(e)
  
  // Hàm lấy thông tin sản phẩm và điền vào modal
  function editProduct(id) {
-     fetch( './controller/handle_product.php', {
+     fetch('./controller/handle_product.php', {
          method: 'POST',
          headers: {
              'Content-Type': 'application/x-www-form-urlencoded',
@@ -91,8 +91,9 @@ document.getElementById('addProductForm').addEventListener('submit', function(e)
              if (categorySelect) {
                  categorySelect.value = product.category_id;
              }
- 
+
              // Hiển thị ảnh hiện tại
+             // Ảnh chính
              if (product.product_image) {
                  const imagePath = product.product_image.startsWith('http') ? 
                      product.product_image : 
@@ -102,7 +103,29 @@ document.getElementById('addProductForm').addEventListener('submit', function(e)
              } else {
                  document.getElementById('currentProductImage').style.display = 'none';
              }
- 
+
+             // Ảnh phụ 1
+             if (product.product_image_2) {
+                 const imagePath2 = product.product_image_2.startsWith('http') ? 
+                     product.product_image_2 : 
+                     '../../' + product.product_image_2;
+                 document.getElementById('currentProductImage2').src = imagePath2;
+                 document.getElementById('currentProductImage2').style.display = 'block';
+             } else {
+                 document.getElementById('currentProductImage2').style.display = 'none';
+             }
+
+             // Ảnh phụ 2
+             if (product.product_image_3) {
+                 const imagePath3 = product.product_image_3.startsWith('http') ? 
+                     product.product_image_3 : 
+                     '../../' + product.product_image_3;
+                 document.getElementById('currentProductImage3').src = imagePath3;
+                 document.getElementById('currentProductImage3').style.display = 'block';
+             } else {
+                 document.getElementById('currentProductImage3').style.display = 'none';
+             }
+
              const modal = new bootstrap.Modal(document.getElementById('editProductModal'));
              modal.show();
          } else {
@@ -134,13 +157,25 @@ document.getElementById('addProductForm').addEventListener('submit', function(e)
          formData.append('category_id', categorySelect.value);
      }
      
-     // Thêm ảnh nếu có
+     // Thêm ảnh chính nếu có
      const image = document.getElementById('editProductImage').files[0];
      if (image) {
          formData.append('product_image', image);
      }
- 
-     fetch( './controller/handle_product.php', {
+
+     // Thêm ảnh phụ 1 nếu có
+     const image2 = document.getElementById('editProductImage2').files[0];
+     if (image2) {
+         formData.append('product_image_2', image2);
+     }
+
+     // Thêm ảnh phụ 2 nếu có
+     const image3 = document.getElementById('editProductImage3').files[0];
+     if (image3) {
+         formData.append('product_image_3', image3);
+     }
+
+     fetch('./controller/handle_product.php', {
          method: 'POST',
          body: formData
      })
