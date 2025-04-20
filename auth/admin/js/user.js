@@ -14,10 +14,10 @@ function editUser(id) {
              
              // Fill form fields with user data
              document.getElementById('editUserId').value = user.id;
-             document.getElementById('editUserFullname').value = user.full_name; // Sửa từ fullname thành full_name
+             document.getElementById('editUserFullname').value = user.full_name; 
              document.getElementById('editUserEmail').value = user.email;
              document.getElementById('editUserPhone').value = user.phone_number || '';
-             document.getElementById('editUserRole').value = user.role_id; // Sửa từ role thành role_id
+             document.getElementById('editUserRole').value = user.role_id; 
              
              // Show modal
              const modal = new bootstrap.Modal(document.getElementById('editUserModal'));

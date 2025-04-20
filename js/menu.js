@@ -5,137 +5,140 @@ document.addEventListener("DOMContentLoaded", function () {
     const quantityDiv = document.getElementById("quantity");
     let currentQuantity = 0;
 
-    if (!popup || !overlay || !closeButton) {
-        console.error("Lỗi: Một hoặc nhiều phần tử không tìm thấy!");
-        return;
-    }
+    // Kiểm tra xem trang có các phần tử popup không
+    if (!popup || !overlay || !closeButton || !quantityDiv) {
+        console.warn("Trang không chứa popup sản phẩm. Bỏ qua chức năng popup.");
+        // Tiếp tục xử lý các chức năng khác (nếu có)
+    } else {
+        // Logic xử lý popup
+        function updatePopupContent({ name, price, salePrice, description, image, image2, image3 }) {
+            document.getElementById('popupTitle').textContent = name || "No Name";
+            document.getElementById('popupOriginalPrice').textContent = price || "0đ";
+            document.getElementById('popupSalePrice').textContent = salePrice || price || "0đ";
+            document.getElementById('popupDescription').textContent = description || "";
+            document.getElementById('popupMainImage').src = image || "";
 
-    function updatePopupContent({ name, price, salePrice, description, image, image2, image3 }) {
-        document.getElementById('popupTitle').textContent = name || "No Name";
-        document.getElementById('popupOriginalPrice').textContent = price || "0đ";
-        document.getElementById('popupSalePrice').textContent = salePrice || price || "0đ";
-        document.getElementById('popupDescription').textContent = description || "";
-        document.getElementById('popupMainImage').src = image || "";
+            const image2Container = document.getElementById('popupImage2Container');
+            const image3Container = document.getElementById('popupImage3Container');
 
-        const image2Container = document.getElementById('popupImage2Container');
-        const image3Container = document.getElementById('popupImage3Container');
+            if (image2 && image2 !== 'null') {
+                image2Container.style.display = 'block';
+                document.getElementById('popupImage2').src = image2;
+            } else {
+                image2Container.style.display = 'none';
+            }
 
-        if (image2 && image2 !== 'null') {
-            image2Container.style.display = 'block';
-            document.getElementById('popupImage2').src = image2;
-        } else {
-            image2Container.style.display = 'none';
+            if (image3 && image3 !== 'null') {
+                image3Container.style.display = 'block';
+                document.getElementById('popupImage3').src = image3;
+            } else {
+                image3Container.style.display = 'none';
+            }
         }
 
-        if (image3 && image3 !== 'null') {
-            image3Container.style.display = 'block';
-            document.getElementById('popupImage3').src = image3;
-        } else {
-            image3Container.style.display = 'none';
+        function showPopup(event) {
+            const product = event.target.closest(".home-product-item");
+            if (!product) return;
+
+            updatePopupContent({
+                name: product.getAttribute("data-name"),
+                price: product.getAttribute("data-price"),
+                salePrice: product.getAttribute("data-sale-price"),
+                description: product.getAttribute("data-description"),
+                image: product.getAttribute("data-image"),
+                image2: product.getAttribute("data-image2"),
+                image3: product.getAttribute("data-image3"),
+            });
+
+            currentQuantity = 0;
+            quantityDiv.textContent = currentQuantity;
+
+            popup.style.display = "block";
+            overlay.style.display = "block";
         }
-    }
 
-    function showPopup(event) {
-        const product = event.target.closest(".home-product-item");
-        if (!product) return;
+        function closePopup() {
+            popup.style.display = "none";
+            overlay.style.display = "none";
+        }
 
-        updatePopupContent({
-            name: product.getAttribute("data-name"),
-            price: product.getAttribute("data-price"),
-            salePrice: product.getAttribute("data-sale-price"),
-            description: product.getAttribute("data-description"),
-            image: product.getAttribute("data-image"),
-            image2: product.getAttribute("data-image2"),
-            image3: product.getAttribute("data-image3"),
+        document.addEventListener("click", function (event) {
+            if (event.target.closest(".home-product-item")) {
+                showPopup(event);
+            }
         });
 
-        currentQuantity = 0;
-        quantityDiv.textContent = currentQuantity;
+        overlay.addEventListener("click", closePopup);
+        closeButton.addEventListener("click", closePopup);
 
-        popup.style.display = "block";
-        overlay.style.display = "block";
+        window.showProductPopup = showPopup;
+        window.closeProductPopup = closePopup;
+
+        // Xử lý tăng/giảm số lượng
+        window.increase = function () {
+            currentQuantity++;
+            quantityDiv.textContent = currentQuantity;
+        };
+
+        window.decrease = function () {
+            if (currentQuantity > 0) {
+                currentQuantity--;
+                quantityDiv.textContent = currentQuantity;
+            }
+        };
     }
 
-    function closePopup() {
-        popup.style.display = "none";
-        overlay.style.display = "none";
-    }
-
-    document.addEventListener("click", function (event) {
-        if (event.target.closest(".home-product-item")) {
-            showPopup(event);
-        }
-    });
-
-    overlay.addEventListener("click", closePopup);
-    closeButton.addEventListener("click", closePopup);
-
+    // Xử lý sản phẩm (like, đánh giá sao)
     const products = document.querySelectorAll(".home-product-item__acction");
     if (products.length === 0) {
-        console.error("Không tìm thấy sản phẩm nào!");
-        return;
-    }
+        console.warn("Không tìm thấy sản phẩm nào trên trang này.");
+    } else {
+        products.forEach(product => {
+            const productId = product.getAttribute("data-id");
 
-    products.forEach(product => {
-        const productId = product.getAttribute("data-id");
+            // Xử lý LIKE (tim)
+            const likeButton = product.querySelector(".home-product-item__like");
+            if (likeButton) {
+                const emptyHeart = likeButton.querySelector(".home-product-item__like-icon-empty");
+                const filledHeart = likeButton.querySelector(".home-product-item__like-icon-fill");
 
-        // Xử lý LIKE (tim)
-        const likeButton = product.querySelector(".home-product-item__like");
-        if (likeButton) {
-            const emptyHeart = likeButton.querySelector(".home-product-item__like-icon-empty");
-            const filledHeart = likeButton.querySelector(".home-product-item__like-icon-fill");
+                let isLiked = localStorage.getItem(`liked-${productId}`) === "true";
 
-            let isLiked = localStorage.getItem(`liked-${productId}`) === "true";
+                function updateHeartDisplay() {
+                    filledHeart.style.display = isLiked ? "inline" : "none";
+                    emptyHeart.style.display = isLiked ? "none" : "inline";
+                }
 
-            function updateHeartDisplay() {
-                filledHeart.style.display = isLiked ? "inline" : "none";
-                emptyHeart.style.display = isLiked ? "none" : "inline";
-            }
-
-            updateHeartDisplay();
-
-            likeButton.addEventListener("click", function () {
-                isLiked = !isLiked;
-                localStorage.setItem(`liked-${productId}`, isLiked);
                 updateHeartDisplay();
-            });
-        }
 
-        // Xử lý ĐÁNH GIÁ SAO
-        const stars = product.querySelectorAll(".home-product-item__star");
-        if (stars.length > 0) {
-            let savedRating = parseInt(localStorage.getItem(`rating-${productId}`)) || 0;
-
-            function updateStars(rating) {
-                stars.forEach((star, index) => {
-                    star.classList.toggle("gold", index < rating);
+                likeButton.addEventListener("click", function () {
+                    isLiked = !isLiked;
+                    localStorage.setItem(`liked-${productId}`, isLiked);
+                    updateHeartDisplay();
                 });
             }
 
-            updateStars(savedRating);
+            // Xử lý ĐÁNH GIÁ SAO
+            const stars = product.querySelectorAll(".home-product-item__star");
+            if (stars.length > 0) {
+                let savedRating = parseInt(localStorage.getItem(`rating-${productId}`)) || 0;
 
-            stars.forEach(star => {
-                star.addEventListener("click", function () {
-                    let rating = parseInt(this.getAttribute("data-index"));
-                    localStorage.setItem(`rating-${productId}`, rating);
-                    updateStars(rating);
+                function updateStars(rating) {
+                    stars.forEach((star, index) => {
+                        star.classList.toggle("gold", index < rating);
+                    });
+                }
+
+                updateStars(savedRating);
+
+                stars.forEach(star => {
+                    star.addEventListener("click", function () {
+                        let rating = parseInt(this.getAttribute("data-index"));
+                        localStorage.setItem(`rating-${productId}`, rating);
+                        updateStars(rating);
+                    });
                 });
-            });
-        }
-    });
-
-    // Xử lý tăng/giảm số lượng
-    window.increase = function () {
-        currentQuantity++;
-        quantityDiv.textContent = currentQuantity;
-    };
-
-    window.decrease = function () {
-        if (currentQuantity > 0) {
-            currentQuantity--;
-            quantityDiv.textContent = currentQuantity;
-        }
-    };
-    window.showProductPopup = showPopup;
-    window.closeProductPopup = closePopup;
+            }
+        });
+    }
 });

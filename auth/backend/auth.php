@@ -27,6 +27,7 @@ class Auth{
         if($run){
             setcookie("user_name",$run['user_name'],time()+1314000,"/");
             setcookie("password",$run['password'],time()+1314000,"/");
+            setcookie("user_id",$run['id'],time()+1314000,"/");
             return true;
         }
         return false;

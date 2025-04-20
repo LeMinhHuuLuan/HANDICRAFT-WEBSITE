@@ -223,8 +223,8 @@
                                                                         $userController = new UserController();
                                                                         $users = $userController->getAll();
                                                                         
-                                                                        // Lấy ID người dùng đang đăng nhập từ session
-                                                                        $current_user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
+                                                                        // Lấy ID người dùng đang đăng nhập từ cookie
+                                                                        $current_user_id = isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 0;
                                                                         
                                                                         while($user = mysqli_fetch_assoc($users)) {
                                                                             // Kiểm tra nếu không phải là user đang đăng nhập thì mới hiển thị

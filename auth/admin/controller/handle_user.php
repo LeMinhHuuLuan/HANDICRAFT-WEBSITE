@@ -1,7 +1,4 @@
 <?php
-     // Bật chế độ hiển thị lỗi và báo cáo lỗi khi truy cập file trong localhost
-     ini_set('display_errors', 1);
-     error_reporting(E_ALL);
 require_once("../../backend/filterAdmin.php");
 require_once("../../../database/connect.php");
 require_once("UserController.php");

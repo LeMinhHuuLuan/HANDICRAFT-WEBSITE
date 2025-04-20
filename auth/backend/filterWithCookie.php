@@ -12,7 +12,7 @@ if ($checkCookie != null): ?>
             <?php if ($checkCookie['role_id'] == 1): ?>
                 <li><a class="dropdown-item" href="./auth/admin/admin.php">Quản lý</a></li>
             <?php endif; ?>
-            <li><a class="dropdown-item" href="#">Hồ sơ</a></li>
+            <li><a class="dropdown-item" href="./profile.php">Hồ sơ</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item text-danger" href="./auth/backend/logoutCookie.php">Đăng Xuất</a></li>
         </ul>
