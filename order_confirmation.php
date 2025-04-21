@@ -74,11 +74,13 @@ if (!$error) {
             font-size: 100px;
             border: 5px solid black;
             display: inline-block;
-            border-radius: 49%;
-            padding: 20px;
+            border-radius: 50%;
+            padding: 5px;
             margin-top: 80px;
-            margin-left: auto;
-            margin-right: auto;
+            overflow: hidden; 
+            width: 140px; 
+            height: 140px;
+            box-sizing: border-box; 
           }
 
           .check_icon i {

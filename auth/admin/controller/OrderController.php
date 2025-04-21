@@ -30,6 +30,23 @@ class OrderController {
         return $result;
     }
 
+    public function getByUserId($user_id) {
+        global $conn;
+        if (!is_numeric($user_id) || $user_id <= 0) return false;
+        $user_id = (int)$user_id;
+        $sql = "SELECT o.id, o.user_id, u.full_name, u.email, u.phone_number, o.ordered_date, o.status 
+                FROM `Order_Management` o 
+                JOIN User u ON u.id = o.user_id 
+                WHERE o.user_id = $user_id 
+                ORDER BY o.ordered_date DESC";
+        $result = mysqli_query($conn, $sql);
+        if (!$result) {
+            error_log("SQL Error: " . mysqli_error($conn));
+            return false;
+        }
+        return $result;
+    }
+
     public function getOrderDetails($order_id) {
         global $conn;
         if (!is_numeric($order_id) || $order_id <= 0) return false;

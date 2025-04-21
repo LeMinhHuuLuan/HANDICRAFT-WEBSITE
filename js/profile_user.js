@@ -1,4 +1,4 @@
-//Ăn theo user.js trong admin nhưng vì khẩu xử lý trong admin có chỗ quyền hạn admin nên phải viết lại chút cho phù hợp với quyền hạn của người dùng bình thường
+//Ăn theo js trong admin nhưng vì khẩu xử lý trong admin có chỗ quyền hạn admin nên phải viết lại chút cho phù hợp với quyền hạn của người dùng bình thường
 function editUser(id) {
     // Kiểm tra và hiển thị modal
     const modalElement = document.getElementById('editProfileModal');

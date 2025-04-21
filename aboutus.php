@@ -8,7 +8,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link rel="stylesheet" href="./css/aboutus.css">
         <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <title>Home</title>
+        <title>Giới thiệu</title>
         <script>
             $(document).ready(function() {
                $(".question-itemn").css({"color":"blue", "font-style":"italic"});

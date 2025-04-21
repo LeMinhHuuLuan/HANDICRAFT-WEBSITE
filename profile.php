@@ -1,8 +1,16 @@
 <?php
+
 require_once("auth/admin/controller/UserController.php");
-$userController = new UserController();
+require_once("auth/admin/controller/OrderController.php");
+
+// Lấy id của người dùng từ cookie
 $user_id = $_COOKIE['user_id'] ?? null;
+
+$userController = new UserController();
 $user = $userController->getById($user_id);
+
+$orderController = new OrderController();
+$orders = $orderController->getByUserId($user_id);
 ?>
 
 <!DOCTYPE html>
@@ -10,59 +18,112 @@ $user = $userController->getById($user_id);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hồ sơ người dùng - Handicraft</title>
-    <style>
-        .profile-container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #f8f9fa;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .profile-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-        .profile-info {
-            margin-bottom: 20px;
-        }
-        .profile-info label {
-            font-weight: bold;
-            margin-right: 10px;
-        }
-    </style>
+    <link rel="shortcut icon" href="./img/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="./css/profile.css">
+    <title>Hồ sơ người dùng</title>
 </head>
 <body>
     <?php include("header.php"); ?>
 
-    <div class="container profile-container">
-        <div class="profile-header">
-            <h2>Hồ sơ người dùng</h2>
-            <p>Xem và chỉnh sửa thông tin cá nhân của bạn</p>
+    <div class="avatar-container">
+        <div class="user-avatar">
+            <i class="fa-solid fa-user"></i>
         </div>
-
-        <div class="profile-info">
-            <p><label>Họ tên:</label> <?php echo htmlspecialchars($user['full_name']); ?></p>
-            <p><label>Email:</label> <?php echo htmlspecialchars($user['email']); ?></p>
-            <p><label>Số điện thoại:</label> <?php echo htmlspecialchars($user['phone_number'] ?? '-'); ?></p>
-            <p><label>Địa chỉ:</label> <?php echo htmlspecialchars($user['address'] ?? '-'); ?></p>
-            <p><label>Vai trò:</label> <?php echo $user['role_id'] == 1 ? 'Admin' : 'User'; ?></p>
-        </div>
-
-        <button class="btn btn-primary" onclick="editUser(<?php echo $user['id']; ?>)">
-            <i class="fa-solid fa-pencil"></i> Chỉnh sửa hồ sơ
-        </button>
-
-        <a href="./index.php" class="btn btn-secondary">
-            <i class="fa-solid fa-door-open"></i> Trở về trang chủ
-        </a>
-
-        <a href="./auth/backend/logoutCookie.php" class="btn btn-danger">
-            <i class="fa-solid fa-right-to-bracket"></i> Đăng xuất
-        </a>
     </div>
 
+    <div class="container profile-container">
+        <!-- Xem thông tin người dùng -->
+        <div class="user_profile">
+            <div class="profile-header">
+                <h2>Hồ sơ người dùng</h2>
+                <p>Xem và chỉnh sửa thông tin cá nhân của bạn</p>
+            </div>
+    
+            <div class="profile-info">
+                <p><label>Họ tên:</label> <?php echo htmlspecialchars($user['full_name']); ?></p>
+                <p><label>Email:</label> <?php echo htmlspecialchars($user['email']); ?></p>
+                <p><label>Số điện thoại:</label> <?php echo htmlspecialchars($user['phone_number'] ?? '-'); ?></p>
+                <p><label>Địa chỉ:</label> <?php echo htmlspecialchars($user['address'] ?? '-'); ?></p>
+                <p><label>Vai trò:</label> <?php echo $user['role_id'] == 1 ? 'Admin' : 'User'; ?></p>
+            </div>
+    
+            <button class="btn btn-primary" onclick="editUser(<?php echo $user['id']; ?>)">
+                <i class="fa-solid fa-pencil"></i> Chỉnh sửa hồ sơ
+            </button>
+    
+            <a href="./auth/backend/logoutCookie.php" class="btn btn-danger">
+                <i class="fa-solid fa-right-to-bracket"></i> Đăng xuất
+            </a>
+        </div>
+
+        <!-- Xem đơn hàng -->
+        <div class="user_order">
+            <div id="orders" class="content-section">
+                <div class="profile-header">
+                    <h2>Quản lý đơn hàng</h2>
+                    <p>Xem chi tiết và trạng thái đơn hàng của bạn</p>
+                </div>
+                <div class="card mt-3">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Mã đơn hàng</th>
+                                        <th>Tổng tiền</th>
+                                        <th>Trạng thái</th>
+                                        <th>Thời gian đặt hàng</th>
+                                        <th>Thao tác</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                        if ($orders && mysqli_num_rows($orders) > 0) {
+                                            while($order = mysqli_fetch_assoc($orders)) {
+                                                $statusClass = $order['status'] == 'Pending' ? 'text-warning' : 'text-success';
+                                                // Tính tổng tiền từ chi tiết đơn hàng nếu không có total_amount trực tiếp
+                                                $details_result = $orderController->getOrderDetails($order['id']);
+                                                $total_amount = 0;
+                                                if ($details_result && mysqli_num_rows($details_result) > 0) {
+                                                    while ($detail = mysqli_fetch_assoc($details_result)) {
+                                                        $total_amount += $detail['total_money'];
+                                                    }
+                                                }
+                                    ?>
+                                    <tr>
+                                        <td>#<?php echo $order['id']; ?></td>
+                                        <td><?php echo number_format($total_amount); ?> VNĐ</td>
+                                        <td><span class="<?php echo $statusClass; ?>"><?php echo $order['status']; ?></span></td>
+                                        <td><?php echo $order['ordered_date'] ?></td>
+                                        <td>
+                                            <button class="btn btn-primary" onclick="viewOrder(<?php echo $order['id']; ?>)">
+                                                <i class="fa-solid fa-eye"></i> Xem chi tiết
+                                            </button>
+                                            <button class="btn btn-danger" onclick="deleteOrder(<?php echo $order['id']; ?>)">
+                                                <i class="fa-solid fa-trash"></i> Xóa
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <?php
+                                            }
+                                        } else {
+                                    ?>
+                                    <tr>
+                                        <td colspan="5" class="text-center">Không có đơn hàng nào</td>
+                                    </tr>
+                                    <?php
+                                        }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal chỉnh sửa hồ sơ -->
     <div class="modal fade" id="editProfileModal" tabindex="-1" aria-labelledby="editProfileModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -100,7 +161,46 @@ $user = $userController->getById($user_id);
             </div>
         </div>
     </div>
-    <script src="js/profile.js"></script>
+
+    <!-- Modal Xem chi tiết đơn hàng -->
+    <div class="modal fade" id="viewOrderModal" tabindex="-1" aria-labelledby="viewOrderModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewOrderModalLabel">Chi tiết đơn hàng</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="orderDetails">
+                        <p><strong>Mã đơn hàng:</strong> <span id="orderId"></span></p>
+                        <p><strong>Khách hàng:</strong> <span id="orderCustomer"></span></p>
+                        <p><strong>Email:</strong> <span id="orderEmail"></span></p>
+                        <p><strong>Địa chỉ:</strong> <span id="orderAddress"></span></p>
+                        <p><strong>Số điện thoại:</strong> <span id="orderPhoneNumber"></span></p>
+                        <p><strong>Ngày đặt hàng:</strong> <span id="orderDate"></span></p>
+                        <p><strong>Trạng thái:</strong> <span id="orderStatus"></span></p>
+                        <h6>Chi tiết sản phẩm:</h6>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Tên sản phẩm</th>
+                                    <th>Số lượng</th>
+                                    <th>Giá</th>
+                                    <th>Tổng</th>
+                                </tr>
+                            </thead>
+                            <tbody id="orderItems"></tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="js/profile_user.js"></script>
+    <script src="js/profile_order.js"></script>
     <?php include("footer.php"); ?>
 </body>
 </html>
