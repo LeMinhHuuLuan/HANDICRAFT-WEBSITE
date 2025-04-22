@@ -1,28 +1,16 @@
-<?php
-     include("header.php");
+<?php 
+    include("header.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="./css/aboutus.css">
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <title>Giới thiệu</title>
-        <script>
-            $(document).ready(function() {
-               $(".question-itemn").css({"color":"blue", "font-style":"italic"});
-              $(".question-item").hide()
-              $(".question-section").click(function(){
-                $(".theloai").click(function(){
-                    $(".loaitin").show(1000);
-               });
-                       });
-                       
-                  });
-        </script>
+        <link rel="stylesheet" href="./css/aboutus.css"> <!-- Bỏ riêng link css aboutus vào đây không để chung trong header để tránh xung đột với shop.php-->
+        <title>About us</title>
     </head>
     <body>
+        
         <div class="wave-container">
             <div class="image-section">
                 <img src="./img/banner-slide 3.jpg" alt="">
@@ -142,12 +130,12 @@
                 <h1>Chỉ sử dụng vật liệu chất lượng cao!</h1>
                 <div class="clay-section">
                     <div class="clay-item">
-                        <img src="./img/aboutus/red-clay.jpg" alt="Red Clay">
+                        <img src="./img/red-clay.jpg" alt="Red Clay">
                         <h3>Đất sét đỏ</h3>
                         <p>Một loại đất nung đỏ có kết cấu trung bình làm từ đá Marl Etruria, thường được dùng để sản xuất Tower Poppies.</p>
                     </div>
                     <div class="clay-item">
-                        <img src="./img/aboutus/blue-clay.jpg" alt="Blue Clay">
+                        <img src="./img/blue-clay.jpg" alt="Blue Clay">
                         <h3>Đất sét xanh</h3>
                         <p>Một loại đồ gốm mịn, có màu lý tưởng để tạo hình, làm đồ trang sức và nặn đất sét.</p>
                     </div>
@@ -196,10 +184,10 @@
                         <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d1959.1436081078991!2d106.61740704452515!3d10.865745499183635!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31752b2a11844fb9%3A0xbed3d5f0a6d6e0fe!2zVHLGsOG7nW5nIMSQ4bqhaSBI4buNYyBHaWFvIFRow7RuZyBW4bqtbiBU4bqjaSBUaMOgbmggUGjhu5EgSOG7kyBDaMOtIE1pbmggKFVUSCkgLSBDxqEgc-G7nyAz!5e0!3m2!1svi!2s!4v1743746408029!5m2!1svi!2s" 
                         width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> </div>
                 </div>
+
+        <?php
+            include("footer.php");
+        ?>
         <script src="./js/menu.js"></script>
     </body>
 </html>
-
-<?php
-    include("footer.php");
-?>

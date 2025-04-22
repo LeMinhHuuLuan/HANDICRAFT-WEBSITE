@@ -1,8 +1,4 @@
 <?php 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
 include("header.php"); 
 require_once("./auth/backend/auth.php");
 require_once("./repository/CartRepository.php");
@@ -99,8 +95,6 @@ if (isset($_POST['confirm_checkout'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/cart.css">
-    <link rel="stylesheet" href="fonts_icon/fontawesome-free-6.7.1-web/fontawesome-free-6.7.1-web/css/all.css">
     <title>Thanh Toán</title>
 </head>
 <body>
@@ -192,7 +186,7 @@ if (isset($_POST['confirm_checkout'])) {
                     <button type="submit" name="confirm_checkout" class="btn" style="font-size: medium;">Xác nhận đơn hàng</button>
                 </form>
                 <div class="policy-links">
-                    <p><a href="shipping-return.php" target="_blank">Chính sách giao hàng - hoàn trả</a></p>
+                    <p><a href="shipping&return.php" target="_blank">Chính sách giao hàng - hoàn trả</a></p>
                 </div>
             </div>
         </div>

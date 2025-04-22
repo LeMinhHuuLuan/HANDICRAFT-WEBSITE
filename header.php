@@ -29,7 +29,10 @@
         <link rel="stylesheet" href="css/banner_slide.css"/>
         <link rel="stylesheet" href="css/bootstrap.css">
         <link rel="stylesheet" href="css/shop.css">
+        <link rel="stylesheet" href="./css/shipping&return.css">
+        <link rel="stylesheet" href="./css/cart.css">
         <link rel="stylesheet" href="fonts_icon/fontawesome-free-6.7.1-web/fontawesome-free-6.7.1-web/css/all.css  ">
+
 </head>
 
 <body>
@@ -54,7 +57,11 @@
             </div>
         </div>
     </header>
-            
-             <script src="./js/menu.js"></script>
-             <script src="./js/bootstrap_banner_slide.js"></script>
+        
+    
+    <script src="./js/shop.js"></script>
+    <script src="./js/menu.js"></script>
+    <script src="./js/JQuery.js"></script>
+    <script src="./js/JsDelivr.js"></script>
+
 </body>
