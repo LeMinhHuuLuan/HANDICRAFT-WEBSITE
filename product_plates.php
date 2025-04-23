@@ -24,8 +24,8 @@
                                 <p class="home-Product__title_text">Trang Chủ / Đĩa</p>
                             </div>
                             <div class="home-filter">
-                                <a href="shop.php" class="home-filter__btn ">
-                                    <img class="menu-img" src="./img/menu__Mug.jpg" alt="">
+                                <a href="shop.php" class="home-filter__btn  ">
+                                    <img class="menu-img" src="./img/menu__Mug.jpg " alt="">
                                     Cốc
                                 </a>
                                 <a href="product_pots.php" class="home-filter__btn ">
@@ -36,7 +36,7 @@
                                     <img class="menu-img" src="./img/menu__Plates.jpg" alt="">
                                     Đĩa
                                 </a>
-                                <a href="product_decor.php" class="home-filter__btn">
+                                <a href="product_decor.php" class="home-filter__btn ">
                                     <img class="menu-img" src="./img/menu__Decor.jpg" alt="">
                                     Trang Trí
                                 </a>
@@ -48,48 +48,10 @@
                         </div>
                         <div class="home-product">
                             <div class="home-product_sorting">
-                                <div class="selection">
-                                    <div class="selection">
-                                        <div class="selection__price">
-                                            <label for="price">Lọc </label>
-                                            <i class="fa-solid fa-chevron-down selection__price-icon"></i>
-                                            <div class="selection__price-content">
-                                                <div class="selection__slider-container">
-                                                    <input type="number" id="min-price" class="selection__slider-input" value="14" min="14" max="320"> -
-                                                    <input type="number" id="max-price" class="selection__slider-input" value="320" min="14" max="320">
-                                                </div>
-                                                <button class="selection__btn" onclick="applyFilter()">Apply</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="selection__color">
-                                        <label for="color">Màu Sắc</label>
-                                        <i class="fa-solid fa-chevron-down selection__price-icon"></i>
-                                        <div class="selection__color-content">
-                                            <div class="selection__color-options">
-                                                <div class="selection__color-option"><span class="selection__color-circle" style="background: #b2b2b2;"></span> Ash Gray</div>
-                                                <div class="selection__color-option"><span class="selection__color-circle" style="background: #000;"></span> Black</div>
-                                                <div class="selection__color-option"><span class="selection__color-circle" style="background: #4169e1;"></span> Blue</div>
-                                                <div class="selection__color-option"><span class="selection__color-circle" style="background: #e3dac9;"></span> Bone</div>
-                                                <div class="selection__color-option"><span class="selection__color-circle" style="background: #8b4513;"></span> Brown</div>
-                                                <div class="selection__color-option"><span class="selection__color-circle" style="background: #808080;"></span> Gray</div>
-                                                <div class="selection__color-option"><span class="selection__color-circle" style="background: #228b22;"></span> Green</div>
-                                                <div class="selection__color-option"><span class="selection__color-circle" style="background: #e5e4e2;"></span> Platinum</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <p class="home-product_sorting-title">SẢN PHẨM ĐẶC BIỆT</p>
                                 <div class="product-sorting">
-                                    <span class="show-label">Xem:</span>
-                                    <a href="#" class="show-option">9</a> /
-                                    <a href="#" class="show-option">12</a> /
-                                    <a href="#" class="show-option">18</a> /
-                                    <a href="#" class="show-option">24</a>
                                     <select class="sorting-dropdown">
                                         <option>Sắp xếp mặc định</option>
-                                        <option>Sắp xếp theo mức độ phổ biến</option>
-                                        <option>Sắp xếp theo đánh giá trung bình</option>
-                                        <option>Sắp xếp theo mới nhất</option>
                                         <option>Sắp xếp theo giá: thấp đến cao</option>
                                         <option>Sắp xếp theo giá: cao đến thấp</option>
                                     </select>
@@ -100,7 +62,7 @@
                                 <?php
                                     require_once("auth/admin/controller/ProductController.php");
                                     $productController = new ProductController();
-                                    $products = $productController->getByCategory(3); // Lấy sản phẩm có category_id = 3(Đĩa)
+                                    $products = $productController->getByCategory(3); // Lấy sản phẩm có category_id = 3 (Đĩa)
                                     
                                     if($products && mysqli_num_rows($products) > 0) {
                                         while($product = mysqli_fetch_assoc($products)) {
@@ -195,7 +157,7 @@
                         <button class="product__cart-reduce" onclick="decrease()">-</button>
                         <div class="product__cart-input" id="quantity">0</div>
                         <button class="product__cart-increase" onclick="increase()">+</button>
-                        <button class="product__cart-button">Thêm giỏ hàng</button>
+                        <button class="product__cart-button" onclick="addToCart()">Thêm giỏ hàng</button>
                     </div>
                     
                     <div class="product__cart-trans">
@@ -212,6 +174,8 @@
                 </div>
             </div>
         </div>
+        <script src="js/shop.js"></script>
+        <script src="js/cart.js"></script>
     </body>
 </html>
 

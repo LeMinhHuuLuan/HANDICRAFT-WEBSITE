@@ -141,4 +141,20 @@ document.addEventListener("DOMContentLoaded", function () {
              }
          });
      }
+
+     // Xử lý tăng/giảm số lượng
+    window.increase = function () {
+        currentQuantity++;
+        quantityDiv.textContent = currentQuantity;
+    };
+
+    window.decrease = function () {
+        if (currentQuantity > 0) {
+            currentQuantity--;
+            quantityDiv.textContent = currentQuantity;
+        }
+    };
+    window.showProductPopup = showPopup;
+    window.closeProductPopup = closePopup;
+
  });

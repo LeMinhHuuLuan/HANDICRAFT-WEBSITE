@@ -76,10 +76,6 @@ if (!$error) {
             border-radius: 50%;
             padding: 5px;
             margin-top: 80px;
-            overflow: hidden; 
-            width: 140px; 
-            height: 140px;
-            box-sizing: border-box; 
           }
 
           .check_icon i {

@@ -80,7 +80,7 @@
                                 <div class="col">
                                     <form method="POST">
                                         <input type="hidden" name="product_id" value="<?php echo $item['product_id']; ?>">
-                                        <input type="number" name="quantit" class="border" value="<?php echo $item['quantity']; ?>" min="1" style="width: 50px; text-align: center;" onchange="this.form.submit();">
+                                        <input type="number" name="quantity" class="border" value="<?php echo $item['quantity']; ?>" min="1" style="width: 50px; text-align: center;" onchange="this.form.submit();">
                                         <input type="hidden" name="update" value="1">
                                     </form>
                                 </div>
