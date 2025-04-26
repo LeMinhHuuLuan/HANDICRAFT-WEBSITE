@@ -2,7 +2,7 @@
     include("header.php");
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -81,8 +81,8 @@
             <img src="./img/aboutus/w-hmp-single-post-image-6.jpg.webp" alt="Hình 7">
         </div>
     </div>
-    <div class="left-next-button"><button class="btn prev-button"><i class="fa-solid fa-arrow-left"></i></i></button></div>
-    <div class="right-next-button"><button class="btn next-button"><i class="fa-solid fa-arrow-right"></button></div>
+    <div class="left-next-button"><button class="btn prev-button"><</button></div>
+    <div class="right-next-button"><button class="btn next-button">></button></div>
 </div>
 <div class="bread-section">
     <div class="text-content">
@@ -185,9 +185,10 @@
                         width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe> </div>
                 </div>
 
-        <?php
-            include("footer.php");
-        ?>
-        <script src="./js/menu.js"></script>
+
     </body>
 </html>
+
+<?php
+    include("footer.php");
+?>

@@ -119,6 +119,16 @@
 <!-- Sản Phẩm Mới -->
 <section class="new-products py-5 bg-light">
     <div class="container">
+        <div class="head-content">
+            <div class="head-content-container">
+                <img src="./img/w-hmp-logo-min-dark.svg" alt="logo">
+                <h2>Nghệ Thuật - Chạm Tới Sự Tinh Tế</h2>
+                <p>Mỗi món gốm là một sự cân bằng giữa hình khối, màu sắc và cảm xúc.
+                    Tinh tế trong từng đường nét, mộc mạc trong từng nhịp thở.
+                    Chúng tôi mang nghệ thuật thủ công đến gần hơn với nhịp sống hiện đại.
+                </p>
+            </div>
+        </div>
         <div class="art-wrapper">
             <div class="art-container">
                 <div class="art-pics">
@@ -310,6 +320,35 @@
     </div>
  </div>
 
+ <!-- bottom content -->
+  <!-- Khám phá nghệ nhân -->
+ <section class="artisan-story py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-4">Hành Trình Của Nghệ Nhân</h2>
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <video src="./video/artisan-process.mp4" playsinline loop muted autoplay poster="./img/artisan-poster.jpg" class="w-100"></video>
+            </div>
+            <div class="col-md-6">
+                <h3>Tâm Huyết Trong Từng Sản Phẩm</h3>
+                <p>Mỗi món gốm là kết tinh của sự kiên nhẫn, sáng tạo và tình yêu dành cho nghệ thuật. Từ việc chọn đất sét đến nung gốm, các nghệ nhân của chúng tôi gửi gắm câu chuyện và cảm xúc vào từng sản phẩm.</p>
+                <a href="aboutus.php" class="btn btn-outline-dark">Khám Phá Thêm</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section py-5" style="background-image: url('./img/aboutus/cta-background.jpg'); background-size: cover; color: white; text-align: center;">
+    <div class="container">
+        <h2>Khám Phá Bộ Sưu Tập Thủ Công Độc Đáo</h2>
+        <p>Hãy để nghệ thuật gốm sứ chạm đến không gian sống của bạn. Ghé thăm cửa hàng hoặc tham gia workshop để tự tay tạo nên kiệt tác của riêng mình!</p>
+        <div class="cta-buttons">
+            <a href="shop.php" class="btn btn-primary btn-lg mx-2">Mua Sắm Ngay</a>
+            <a href="aboutus.php#contact" class="btn btn-outline-light btn-lg mx-2">Liên Hệ</a>
+        </div>
+    </div>
+</section>
 
 <?PHP
      include("footer.php")

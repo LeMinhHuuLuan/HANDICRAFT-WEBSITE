@@ -23,6 +23,30 @@
   font-size: 32px;
 }
 
+/* Head content */
+.head-content-container{
+  text-align: center;
+}
+
+.head-content-container img{
+  width: 100px;
+  height: 100px;
+  margin-top: -60px; 
+  margin-bottom: 30px;
+}
+
+.head-content-container h2{
+  font-size: 40px;
+  font-weight: 700;
+}
+
+.head-content-container p{
+  color: #555;
+  margin-top: 10px;
+  display: inline-block;
+  width: 50%;
+}
+
 /* Home new arrival */
 .new-arrival{
   text-align: center;

@@ -27,7 +27,8 @@
         <link rel="stylesheet" href="css/shop.css">
         <link rel="stylesheet" href="./css/shipping&return.css">
         <link rel="stylesheet" href="./css/cart.css">
-        <link rel="stylesheet" href="fonts_icon/fontawesome-free-6.7.1-web/fontawesome-free-6.7.1-web/css/all.css  ">
+        <link rel="stylesheet" href="./fonts_icon/fontawesome-free-6.7.1-web/fontawesome-free-6.7.1-web/css/all.min.css">
+        
 
 </head>
 
