@@ -1,4 +1,5 @@
 <?php 
+ob_start();
 include("header.php"); 
 require_once("./auth/backend/auth.php");
 require_once("./repository/CartRepository.php");
