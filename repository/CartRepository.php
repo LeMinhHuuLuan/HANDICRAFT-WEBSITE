@@ -1,12 +1,57 @@
 <?php
      require_once(__DIR__."../../database/connect.php");
      class CartRepository{
-          //Thêm sản phẩm vào giỏ hàng
-          public function insert($user_id, $product_id, $quantity, $price){
+          // THÊM SẢN PHẨM VÀO GIỎ HÀNG
+          public function addToCart($user_id, $product_id, $quantity, $price) {
                global $conn;
-               $sql = "INSERT INTO cart (user_id, product_id, quantity, price) VALUES ($user_id, $product_id, $quantity, $price)";
-               return mysqli_query($conn, $sql);
-          }
+               try {
+                   // Kiểm tra xem sản phẩm đã có trong giỏ hàng chưa
+                   $check_sql = "SELECT id, quantity FROM cart 
+                                WHERE user_id = ? AND product_id = ?";
+                   $stmt = $conn->prepare($check_sql);
+                   $stmt->bind_param("ii", $user_id, $product_id);
+                   $stmt->execute();
+                   $result = $stmt->get_result();
+                   
+                   if ($result->num_rows > 0) {
+                       $cart_item = $result->fetch_assoc();
+                       $new_quantity = $cart_item['quantity'] + $quantity;
+                       
+                       $update_sql = "UPDATE cart 
+                                    SET quantity = ?, price = ?
+                                    WHERE id = ?";
+                       $stmt = $conn->prepare($update_sql);
+                       $stmt->bind_param("idi", $new_quantity, $price, $cart_item['id']);
+                       if ($stmt->execute()) {
+                           return [
+                               'success' => true,
+                               'message' => 'Cập nhật giỏ hàng thành công'
+                           ];
+                       }
+                   } else {
+                       // Nếu sản phẩm chưa có, thêm mới
+                       $insert_sql = "INSERT INTO cart (user_id, product_id, quantity, price) 
+                                    VALUES (?, ?, ?, ?)";
+                       $stmt = $conn->prepare($insert_sql);
+                       $stmt->bind_param("iiid", $user_id, $product_id, $quantity, $price);
+                       if ($stmt->execute()) {
+                           return [
+                               'success' => true,
+                               'message' => 'Thêm vào giỏ hàng thành công'
+                           ];
+                       }
+                   }
+                   return [
+                       'success' => false,
+                       'message' => 'Không thể thêm hoặc cập nhật giỏ hàng'
+                   ];
+               } catch (Exception $e) {
+                   return [
+                       'success' => false,
+                       'message' => 'Lỗi: ' . $e->getMessage()
+                   ];
+               }
+           }
 
           //Tìm sản phẩm trong giỏ hàng theo user_id và product_id
           public function findByUserIdAndProductId($user_id, $product_id){

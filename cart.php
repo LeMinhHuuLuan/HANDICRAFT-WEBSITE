@@ -1,11 +1,12 @@
 <?php
+    ob_start(); // Bắt đầu buffer để tránh lỗi header
     include("header.php");
     require_once("./repository/CartRepository.php");
-
+    session_start();
     $CartRepository = new CartRepository();
 
-    $user_id = isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : null;
-
+    //Lấy user_id từ session
+    $user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
     // Kiểm tra nếu không có user_id, có thể chuyển hướng hoặc hiển thị thông báo
     if (!$user_id) {
         echo "<script>
@@ -20,7 +21,6 @@
 
     // Khởi tạo phí vận chuyển
     $shipping_fee = isset($_POST['shipping']) ? (int)$_POST['shipping'] : 25000; // Mặc định là giao hàng tiêu chuẩn
-
 
     // Xử lý cập nhật số lượng sản phẩm
     if (isset($_POST['update'])) {

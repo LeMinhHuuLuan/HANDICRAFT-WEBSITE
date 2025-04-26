@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
          function showPopup(event) {
              const product = event.target.closest(".home-product-item");
              if (!product) return;
- 
+             $('#search-modal').modal('hide');
              updatePopupContent({
                  name: product.getAttribute("data-name"),
                  price: product.getAttribute("data-price"),
@@ -86,60 +86,6 @@ document.addEventListener("DOMContentLoaded", function () {
                  quantityDiv.textContent = currentQuantity;
              }
          };
-     }
- 
-     // Xử lý sản phẩm (like, đánh giá sao)
-     const products = document.querySelectorAll(".home-product-item__acction");
-     if (products.length === 0) {
-         console.warn("Không tìm thấy sản phẩm nào trên trang này.");
-     } else {
-         products.forEach(product => {
-             const productId = product.getAttribute("data-id");
- 
-             // Xử lý LIKE (tim)
-             const likeButton = product.querySelector(".home-product-item__like");
-             if (likeButton) {
-                 const emptyHeart = likeButton.querySelector(".home-product-item__like-icon-empty");
-                 const filledHeart = likeButton.querySelector(".home-product-item__like-icon-fill");
- 
-                 let isLiked = localStorage.getItem(`liked-${productId}`) === "true";
- 
-                 function updateHeartDisplay() {
-                     filledHeart.style.display = isLiked ? "inline" : "none";
-                     emptyHeart.style.display = isLiked ? "none" : "inline";
-                 }
- 
-                 updateHeartDisplay();
- 
-                 likeButton.addEventListener("click", function () {
-                     isLiked = !isLiked;
-                     localStorage.setItem(`liked-${productId}`, isLiked);
-                     updateHeartDisplay();
-                 });
-             }
- 
-             // Xử lý ĐÁNH GIÁ SAO
-             const stars = product.querySelectorAll(".home-product-item__star");
-             if (stars.length > 0) {
-                 let savedRating = parseInt(localStorage.getItem(`rating-${productId}`)) || 0;
- 
-                 function updateStars(rating) {
-                     stars.forEach((star, index) => {
-                         star.classList.toggle("gold", index < rating);
-                     });
-                 }
- 
-                 updateStars(savedRating);
- 
-                 stars.forEach(star => {
-                     star.addEventListener("click", function () {
-                         let rating = parseInt(this.getAttribute("data-index"));
-                         localStorage.setItem(`rating-${productId}`, rating);
-                         updateStars(rating);
-                     });
-                 });
-             }
-         });
      }
 
      // Xử lý tăng/giảm số lượng

@@ -110,3 +110,19 @@ body {
     position: relative;
     top: -0.5em;
 }
+
+/* CSS cho modal */
+#search-results .row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+#search-results .home-product-item {
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+#search-results .home-product-item:hover {
+    transform: translateY(-5px);
+}

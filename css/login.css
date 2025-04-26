@@ -35,24 +35,24 @@ body {
    }
    .container {
      background: rgba(230, 223, 223, 0.6);
-     padding: 80px; /* Tăng khoảng cách bên trong */
+     padding: 80px; 
      border-radius: 8px;
      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-     width: 350px; /* Tăng chiều rộng */
+     width: 350px; 
      animation: fadeIn 1s ease-in-out;
    }
    h2 {
      text-align: center;
-     font-size: 60px; /* Tăng kích thước tiêu đề */
+     font-size: 60px; 
    }
    input {
-     padding: 16px; /* Tăng khoảng cách bên trong */
+     padding: 16px; 
      margin: 16px 0;
-     font-size: 40px; /* Tăng kích thước chữ */
+     font-size: 40px; 
    }
    button {
-     padding: 16px; /* Tăng khoảng cách trong nút */
-     font-size: 10px; /* Tăng kích thước chữ trong nút */
+     padding: 16px; 
+     font-size: 10px; 
    }
    h2 {
      text-align: center;
@@ -85,8 +85,8 @@ body {
    }
    .options {
      font-size: 16px;
-     text-align: center; /* Căn chỉnh văn bản theo trục ngang */
-     margin-top: 10px; /* Thêm khoảng cách từ phần tử phía trên */
+     text-align: center; 
+     margin-top: 10px; 
    }
    .options label {
      display: flex;
@@ -113,3 +113,18 @@ body {
        transform: translateY(0);
      }
    }
+
+   .remember-me-container {
+    display: flex;
+    align-items: center;
+    margin: 10px 0;
+  }
+  
+  .remember-me-container label {
+    margin-right: 10px;
+  }
+  
+  #remember_me {
+    width: auto;
+    margin: 0;
+  }

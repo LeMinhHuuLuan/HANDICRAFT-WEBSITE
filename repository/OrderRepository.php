@@ -25,30 +25,30 @@ class OrderRepository {
 
     public function addOrderDetail($order_id, $product_id, $quantity, $total_money) {
         global $conn;
-        $sql = "INSERT INTO Detail_Order (order_id, product_id, quantity, total_money) VALUES (?, ?, ?, ?)";
-        $stmt = mysqli_prepare($conn, $sql);
-        if (!$stmt) {
-            error_log("Lỗi chuẩn bị truy vấn addOrderDetail: " . mysqli_error($conn));
-            return false;
-        }
-        mysqli_stmt_bind_param($stmt, "iiid", $order_id, $product_id, $quantity, $total_money);
-        $result = mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-        return $result;
+         // Lấy giá từ bảng Product
+         $sql_price = "SELECT price FROM Product WHERE id = " . (int)$product_id;
+         $result_price = mysqli_query($conn, $sql_price);
+         
+         $row = mysqli_fetch_assoc($result_price);
+         $price = $row['price'];
+         $total_money = $price * $quantity;
+ 
+         // Chèn vào bảng Detail_Order
+         $sql = "INSERT INTO Detail_Order (order_id, product_id, price, quantity, total_money) VALUES (" . (int)$order_id . ", " . (int)$product_id . ",".(int)$price.", " . (int)$quantity . ", " . (float)$total_money . ")";
+         return mysqli_query($conn, $sql);
     }
 
     public function clearCart($user_id) {
         global $conn;
-        $sql = "DELETE FROM Cart WHERE user_id = ?";
-        $stmt = mysqli_prepare($conn, $sql);
-        if (!$stmt) {
-            error_log("Lỗi chuẩn bị truy vấn clearCart: " . mysqli_error($conn));
+        // Ép kiểu user_id thành số nguyên
+        $user_id = (int)$user_id;
+        $sql = "DELETE FROM Cart WHERE user_id = $user_id";
+        $result = mysqli_query($conn, $sql);
+        if (!$result) {
+            error_log("Lỗi thực thi clearCart: " . mysqli_error($conn));
             return false;
         }
-        mysqli_stmt_bind_param($stmt, "i", $user_id);
-        $result = mysqli_stmt_execute($stmt);
-        mysqli_stmt_close($stmt);
-        return $result;
+        return true;
     }
 }
 ?>

@@ -8,11 +8,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="css/Tailwindcss.css">
     <title>Đăng Ký Tài Khoản</title>
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
-    />
+
   </head>
   <body class="flex items-center justify-center min-h-screen">
     <div class="account-box">
@@ -52,11 +50,8 @@
 
 
 <?php
-  require_once("./utils/checkEmpty.php");
-        if(isset($_POST['submit'])){
-            if(CheckEmpty::checkEmpty(['user_name','full_name','email','phone_number','address','password'])){
-                Auth::register($_POST['user_name'],$_POST['full_name'],$_POST['email'],
-                $_POST['phone_number'],$_POST['address'],$_POST['password']);
-            }
-        }
+  if(isset($_POST['submit'])){
+      Auth::register($_POST['user_name'],$_POST['full_name'],$_POST['email'],
+      $_POST['phone_number'],$_POST['address'],$_POST['password']);
+  }
 ?>

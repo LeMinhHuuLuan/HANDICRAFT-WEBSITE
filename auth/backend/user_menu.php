@@ -1,4 +1,5 @@
 <?php
+// Hiện thị menu người dùng khi đăng nhập theo role_id đã định nghĩa
 require_once("auth.php");
 $checkCookie = Auth::loginWithCookie();
 if ($checkCookie != null): ?>
@@ -14,7 +15,7 @@ if ($checkCookie != null): ?>
             <?php endif; ?>
             <li><a class="dropdown-item" href="./profile.php">Hồ sơ</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item text-danger" href="./auth/backend/logoutCookie.php">Đăng Xuất</a></li>
+            <li><a class="dropdown-item text-danger" href="./auth/backend/log_out.php">Đăng Xuất</a></li>
         </ul>
     </div>
 <?php else: ?>

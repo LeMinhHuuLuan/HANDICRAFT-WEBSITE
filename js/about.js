@@ -1,18 +1,28 @@
-$(document).ready(function() {
+jQuery(document).ready(function($) {
     $(".question-itemn").css({"color":"blue", "font-style":"italic"});
     $(".question-item").hide();
     $(".question-section").click(function(){
         $(this).next(".question-item").slideToggle(1000);
     });
-  });
-  
-  document.addEventListener('DOMContentLoaded', function() {
+});
+
+document.addEventListener('DOMContentLoaded', function() {
     const sliderContainer = document.querySelector('.slider-container');
+    
+    if (!sliderContainer) {
+        return;
+    }
+    
     const prevButton = document.querySelector('.prev-button');
     const nextButton = document.querySelector('.next-button');
     const originalItems = document.querySelectorAll('.item:not(.clone)');
-    const sliderWidth = document.querySelector('.image-slider').offsetWidth;
-    let currentIndex = 1; // Start at the second image (index 1)
+
+    if (!originalItems.length) {
+        console.log('No slider items found');
+        return;
+    }
+
+    let currentIndex = 1;
     let itemWidth = originalItems[0].offsetWidth;
     let isTransitioning = false;
     const numberOfOriginalItems = originalItems.length;
@@ -35,7 +45,6 @@ $(document).ready(function() {
   
     let items = document.querySelectorAll('.item');
   
-    // Adjust initial position based on the starting currentIndex
     sliderContainer.style.transform = `translateX(-${(currentIndex + cloneCount) * itemWidth}px)`;
   
     function updateSlider(animate = true) {
@@ -58,13 +67,13 @@ $(document).ready(function() {
         updateSlider();
     }
   
-    nextButton.addEventListener('click', () => {
-        nextSlide();
-    });
+    if (nextButton) {
+        nextButton.addEventListener('click', nextSlide);
+    }
   
-    prevButton.addEventListener('click', () => {
-        prevSlide();
-    });
+    if (prevButton) {
+        prevButton.addEventListener('click', prevSlide);
+    }
   
     sliderContainer.addEventListener('transitionend', () => {
         isTransitioning = false;
@@ -82,14 +91,14 @@ $(document).ready(function() {
         }
     });
   
-    window.addEventListener('resize', function() {
-        sliderWidth = document.querySelector('.image-slider').offsetWidth;
-        itemWidth = originalItems[0].offsetWidth;
-        updateSlider(false);
-    });
+    function updateItemWidth() {
+        if (originalItems[0]) {
+            itemWidth = originalItems[0].offsetWidth;
+            updateSlider(false);
+        }
+    }
+
+    window.addEventListener('resize', updateItemWidth);
   
-    setTimeout(() => {
-        itemWidth = originalItems[0].offsetWidth;
-        updateSlider(false);
-    }, 100);
-  });
+    setTimeout(updateItemWidth, 100);
+});

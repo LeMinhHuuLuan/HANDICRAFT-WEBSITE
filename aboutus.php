@@ -81,8 +81,8 @@
             <img src="./img/aboutus/w-hmp-single-post-image-6.jpg.webp" alt="Hình 7">
         </div>
     </div>
-    <button class="prev-button">←</button>
-    <button class="next-button">→</button>
+    <div class="left-next-button"><button class="btn prev-button"><i class="fa-solid fa-arrow-left"></i></i></button></div>
+    <div class="right-next-button"><button class="btn next-button"><i class="fa-solid fa-arrow-right"></button></div>
 </div>
 <div class="bread-section">
     <div class="text-content">
@@ -130,12 +130,12 @@
                 <h1>Chỉ sử dụng vật liệu chất lượng cao!</h1>
                 <div class="clay-section">
                     <div class="clay-item">
-                        <img src="./img/red-clay.jpg" alt="Red Clay">
+                        <img src="./img/aboutus/red-clay.jpg" alt="Red Clay">
                         <h3>Đất sét đỏ</h3>
                         <p>Một loại đất nung đỏ có kết cấu trung bình làm từ đá Marl Etruria, thường được dùng để sản xuất Tower Poppies.</p>
                     </div>
                     <div class="clay-item">
-                        <img src="./img/blue-clay.jpg" alt="Blue Clay">
+                        <img src="./img/aboutus/blue-clay.jpg" alt="Blue Clay">
                         <h3>Đất sét xanh</h3>
                         <p>Một loại đồ gốm mịn, có màu lý tưởng để tạo hình, làm đồ trang sức và nặn đất sét.</p>
                     </div>
@@ -168,8 +168,8 @@
             
                         <div class="contact-section">
                             <h3>Phone</h3>
-                            <p><a href="tel:2118208293">(211) 820-8293</a></p>
-                            <p><a href="tel:2118208295">(211) 820-8295</a></p>
+                            <p><a href="tel:2118208293">(+84) 123 456 789</a></p>
+                            <p><a href="tel:2118208295">(+84) 987 654 321</a></p>
                         </div>
             
                         <div class="contact-section">

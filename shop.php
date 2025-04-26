@@ -50,10 +50,10 @@
                             <div class="home-product_sorting">
                                 <p class="home-product_sorting-title">SẢN PHẨM ĐẶC BIỆT</p>
                                 <div class="product-sorting">
-                                    <select class="sorting-dropdown">
-                                        <option>Sắp xếp mặc định</option>
-                                        <option>Sắp xếp theo giá: thấp đến cao</option>
-                                        <option>Sắp xếp theo giá: cao đến thấp</option>
+                                    <select class="sorting-dropdown"  id="sortingDropdown" name="sorting">
+                                        <option value="default">Sắp xếp mặc định</option>
+                                        <option value="price_asc">Sắp xếp theo giá: thấp đến cao</option>
+                                        <option value="price_desc">Sắp xếp theo giá: cao đến thấp</option>
                                     </select>
                                 </div>
                             </div>  
@@ -154,10 +154,10 @@
                     </div>
                     
                     <div class="product__cart">
-                        <button class="product__cart-reduce" onclick="decrease()">-</button>
+                        <button class="product__cart-reduce" >-</button>
                         <div class="product__cart-input" id="quantity">0</div>
-                        <button class="product__cart-increase" onclick="increase()">+</button>
-                        <button class="product__cart-button" onclick="addToCart()">Thêm giỏ hàng</button>
+                        <button class="product__cart-increase" >+</button>
+                        <button class="product__cart-button" >Thêm giỏ hàng</button>
                     </div>
                     
                     <div class="product__cart-trans">
@@ -174,8 +174,18 @@
                 </div>
             </div>
         </div>
-        <script src="js/shop.js"></script>
-        <script src="js/cart.js"></script>
+        <script>
+            // Xử lý sắp xếp sản phẩm
+            document.getElementById('sortingDropdown').addEventListener('change', function() {
+                const sortValue = this.value;
+                window.location.href = 'shop.php?sort=' + sortValue;
+            });
+
+            // Đặt giá trị sắp xếp hiện tại cho dropdown
+            const urlParams = new URLSearchParams(window.location.search);
+            const currentSort = urlParams.get('sort') || 'default';
+            document.getElementById('sortingDropdown').value = currentSort;
+        </script>
     </body>
 </html>
 

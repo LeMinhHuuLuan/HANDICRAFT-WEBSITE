@@ -1,4 +1,6 @@
 <?php
+    // Tên file cũ: authWithCookie.php
+    // Kiểm tra cookie và đăng nhập tự động
     require_once("auth.php");
     $checkCookie = Auth::loginWithCookie();
     if($checkCookie == null){

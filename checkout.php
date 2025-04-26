@@ -6,10 +6,16 @@ require_once("./repository/OrderRepository.php");
 
 $CartRepository = new CartRepository();
 $OrderRepository = new OrderRepository();
-$user_id = isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : null;
 
+//Lấy user_id từ session
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+
+// Kiểm tra đăng nhập để thanh toán
 if (!$user_id) {
-    header("Location: login.php?error=Vui lòng đăng nhập để thanh toán");
+    echo "<script>
+        alert('Vui lòng đăng nhập để vào giỏ hàng');
+        window.location.href = 'login.php';
+    </script>";
     exit;
 }
 
@@ -20,10 +26,7 @@ $CartItem = $CartRepository->findByUserId($user_id);
 $shipping_fee = isset($_POST['shipping']) ? (int)$_POST['shipping'] : 25000;
 
 // Lấy thông tin người dùng
-$infoUser = Auth::loginWithCookie();
-
-// Hiển thị lỗi nếu có
-$error = isset($_GET['error']) ? htmlspecialchars($_GET['error']) : '';
+$infoUser = Auth::findOneById($user_id);
 
 // Xử lý khi nhấn xác nhận đơn hàng
 if (isset($_POST['confirm_checkout'])) {
@@ -49,44 +52,38 @@ if (isset($_POST['confirm_checkout'])) {
     // Bắt đầu giao dịch
     mysqli_begin_transaction($conn);
 
-    try {
-        // Tạo đơn hàng mới
-        $order_id = $OrderRepository->createOrder($user_id, $full_name, $email, $phone_number, $address);
-        if (!$order_id) {
-            throw new Exception("Không thể tạo đơn hàng. Vui lòng thử lại.");
-        }
-
-        // Thêm chi tiết đơn hàng
-        $CartItem = $CartRepository->findByUserId($user_id);
-        while ($item = mysqli_fetch_assoc($CartItem)) {
-            $product_id = $item['product_id'];
-            $quantity = $item['quantity'];
-            $total_money = $item['price'] * $item['quantity'];
-
-            $result = $OrderRepository->addOrderDetail($order_id, $product_id, $quantity, $total_money);
-            if (!$result) {
-                throw new Exception("Không thể thêm chi tiết đơn hàng. Vui lòng thử lại.");
-            }
-        }
-
-        // Xóa giỏ hàng
-        $result = $OrderRepository->clearCart($user_id);
-        if (!$result) {
-            throw new Exception("Không thể xóa giỏ hàng. Vui lòng thử lại.");
-        }
-
-        // Commit giao dịch
-        mysqli_commit($conn);
-
-        // Chuyển hướng
-        header("Location: order_confirmation.php?order_id=$order_id");
-        exit;
-    } catch (Exception $e) {
-        mysqli_rollback($conn);
-        error_log("Lỗi checkout: " . $e->getMessage());
-        header("Location: checkout.php?error=" . urlencode($e->getMessage()));
-        exit;
+    // Tạo đơn hàng mới
+    $order_id = $OrderRepository->createOrder($user_id, $full_name, $email, $phone_number, $address);
+    if (!$order_id) {
+        throw new Exception("Không thể tạo đơn hàng. Vui lòng thử lại.");
     }
+
+    // Thêm vào chi tiết đơn hàng
+    $CartItem = $CartRepository->findByUserId($user_id);
+    while ($item = mysqli_fetch_assoc($CartItem)) {
+        $product_id = $item['product_id'];
+        $quantity = $item['quantity'];
+        $total_money = $item['price'] * $item['quantity'];
+
+        $result = $OrderRepository->addOrderDetail($order_id, $product_id, $quantity, $total_money);
+        if (!$result) {
+            throw new Exception("Không thể thêm chi tiết đơn hàng. Vui lòng thử lại.");
+        }
+    }
+
+    // Xóa giỏ hàng sau khi thêm xong 
+    $result = $OrderRepository->clearCart($user_id);
+    if (!$result) {
+        throw new Exception("Không thể xóa giỏ hàng. Vui lòng thử lại.");
+    }
+
+    // Commit giao dịch
+    mysqli_commit($conn);
+
+    // Chuyển hướng trang xác nhận đơn hàng
+    header("Location: order_confirmation.php?order_id=$order_id");
+    exit;
+
 }
 ?>
 
@@ -99,9 +96,6 @@ if (isset($_POST['confirm_checkout'])) {
 </head>
 <body>
 <div class="cart-container">
-    <?php if ($error): ?>
-        <p style="color: red; text-align: center;"><?php echo $error; ?></p>
-    <?php endif; ?>
     <div class="card">
         <div class="row">
             <div class="col-md-8 cart">

@@ -1,5 +1,5 @@
 <?php
-    require_once("../backend/filterAdmin.php");
+    require_once("../backend/restrict_admin.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -52,7 +52,7 @@
                             <i class="bi bi-house-door"></i> Trở về trang chủ
                         </a>
                         <!-- Thêm link đăng xuất -->
-                        <a class="nav-link external-link text-danger" href="../backend/logoutCookie.php">
+                        <a class="nav-link external-link text-danger" href="../backend/log_out.php">
                             <i class="bi bi-box-arrow-right"></i> Đăng xuất
                         </a>
                     </nav>
@@ -220,11 +220,12 @@
                                                                     <!-- User data will be loaded here via JavaScript -->
                                                                     <?php
                                                                         require_once("controller/UserController.php");
+                                                                        session_start();
                                                                         $userController = new UserController();
                                                                         $users = $userController->getAll();
                                                                         
-                                                                        // Lấy ID người dùng đang đăng nhập từ cookie
-                                                                        $current_user_id = isset($_COOKIE['user_id']) ? $_COOKIE['user_id'] : 0;
+                                                                        // Lấy ID người dùng đang đăng nhập từ session
+                                                                        $current_user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : 0;
                                                                         
                                                                         while($user = mysqli_fetch_assoc($users)) {
                                                                             // Kiểm tra nếu không phải là user đang đăng nhập thì mới hiển thị

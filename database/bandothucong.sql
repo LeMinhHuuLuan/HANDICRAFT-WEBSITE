@@ -87,7 +87,7 @@ CREATE TABLE `order_management` (
   `phone_number` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `ordered_date` datetime NOT NULL,
-  `status` enum('Pending','Approved') NOT NULL DEFAULT 'Pending'
+  `status` enum('Đang chờ xử lý','Đã chấp thuận','Bị từ chối','Đang tiến hành','Đã hoàn thành') NOT NULL DEFAULT 'Đang chờ xử lý'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -154,7 +154,8 @@ CREATE TABLE `user` (
   `phone_number` varchar(255) NOT NULL,
   `address` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `role_id` int(11) NOT NULL DEFAULT 0
+  `role_id` int(11) NOT NULL DEFAULT 0,
+  `remember_token` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --

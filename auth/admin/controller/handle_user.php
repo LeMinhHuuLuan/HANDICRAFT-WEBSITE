@@ -1,5 +1,5 @@
 <?php
-require_once("../../backend/filterAdmin.php");
+require_once("../../backend/restrict_admin.php");
 require_once("../../../database/connect.php");
 require_once("UserController.php");
 

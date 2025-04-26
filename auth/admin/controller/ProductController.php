@@ -163,5 +163,21 @@
             }
             return false;
         }
+
+        // Phương thức lấy sản phẩm mới nhất
+        public function getLatestProducts($limit = 8) { // Giới hạn sản phẩm mới nhất
+            global $conn;
+            $query = "SELECT p.id, p.name, p.description, p.price, p.sale_price, 
+                             p.product_image, p.product_image_2, p.product_image_3, 
+                             c.name AS category_name
+                      FROM Product p
+                      LEFT JOIN Category c ON p.category_id = c.id
+                      ORDER BY p.id DESC
+                      LIMIT ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("i", $limit);
+            $stmt->execute();
+            return $stmt->get_result();
+        }
     }
 ?>

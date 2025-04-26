@@ -154,10 +154,10 @@
                     </div>
                     
                     <div class="product__cart">
-                        <button class="product__cart-reduce" onclick="decrease()">-</button>
+                        <button class="product__cart-reduce" >-</button>
                         <div class="product__cart-input" id="quantity">0</div>
-                        <button class="product__cart-increase" onclick="increase()">+</button>
-                        <button class="product__cart-button" onclick="addToCart()">Thêm giỏ hàng</button>
+                        <button class="product__cart-increase" >+</button>
+                        <button class="product__cart-button" >Thêm giỏ hàng</button>
                     </div>
                     
                     <div class="product__cart-trans">

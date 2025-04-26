@@ -1,13 +1,8 @@
 <?php
 include("header.php");
-
 require_once("./database/connect.php");
 
 global $conn;
-if (!$conn) {
-    die("Lỗi kết nối cơ sở dữ liệu: " . mysqli_connect_error());
-}
-
 // Lấy order_id từ URL
 $order_id = isset($_GET['order_id']) ? (int)$_GET['order_id'] : 0;
 if ($order_id <= 0) {

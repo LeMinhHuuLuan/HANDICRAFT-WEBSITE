@@ -1,11 +1,17 @@
 <?php
-
 require_once("auth/admin/controller/UserController.php");
 require_once("auth/admin/controller/OrderController.php");
+session_start();
 
-// Lấy id của người dùng từ cookie
-$user_id = $_COOKIE['user_id'] ?? null;
-
+$user_id = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+// Kiểm tra nếu không có user_id, có thể chuyển hướng hoặc hiển thị thông báo
+if (!$user_id) {
+    echo "<script>
+        alert('Vui lòng đăng nhập để vào hồ sơ');
+        window.location.href = 'login.php';
+    </script>";
+    exit;
+}
 $userController = new UserController();
 $user = $userController->getById($user_id);
 
