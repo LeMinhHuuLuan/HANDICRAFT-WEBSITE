@@ -534,3 +534,35 @@ i.home-product-item__like-icon-fill {
     object-fit: cover; /* Cắt hình ảnh để vừa khung */
     border-radius: 8px; /* Bo góc nhẹ */
 }
+
+/* Hiệu ứng cho overlay */
+.overlay {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.overlay.active {
+    opacity: 1;
+}
+
+/* Hiệu ứng cho popup */
+.popup {
+    opacity: 0;
+    transform: translate(-50%, -60%);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.popup.active {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+}
+
+/* Hiệu ứng khi hover ảnh */
+.gallery__item img {
+    transition: transform 0.3s ease;
+}
+
+.gallery__item:hover img {
+    transform: scale(1.05);
+}
+
