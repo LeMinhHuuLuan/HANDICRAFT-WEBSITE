@@ -270,4 +270,19 @@ document.addEventListener('DOMContentLoaded', function() {
      window.addToCart = addToCart;
      window.showProductPopup = showProductPopup;
      window.closeProductPopup = closeProductPopup;
+
+     // Xử lý sắp xếp sản phẩm
+     const sortingDropdown = document.getElementById('sortingDropdown');
+     if (sortingDropdown) {
+         sortingDropdown.addEventListener('change', function() {
+             const sortValue = this.value;
+             const currentPage = window.location.pathname.split('/').pop();
+             window.location.href = currentPage + '?sort=' + sortValue;
+         });
+
+         // Đặt giá trị sắp xếp hiện tại cho dropdown
+         const urlParams = new URLSearchParams(window.location.search);
+         const currentSort = urlParams.get('sort') || 'default';
+         sortingDropdown.value = currentSort;
+     }
  });

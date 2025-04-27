@@ -62,7 +62,8 @@
                                 <?php
                                     require_once("auth/admin/controller/ProductController.php");
                                     $productController = new ProductController();
-                                    $products = $productController->getByCategory(5); // Lấy sản phẩm có category_id = 5 (Bát)
+                                    $sort = isset($_GET['sort']) ? $_GET['sort'] : 'default';
+                                    $products = $productController->getByCategory(5,null,$sort); // Lấy sản phẩm có category_id = 5 (Bát)
                                     
                                     if($products && mysqli_num_rows($products) > 0) {
                                         while($product = mysqli_fetch_assoc($products)) {

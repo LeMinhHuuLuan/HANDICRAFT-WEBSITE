@@ -128,21 +128,32 @@
             return $row['total'];
         }
     
-        // Lấy sản phẩm theo danh mục
-        public function getByCategory($category_id, $limit = null) {
+        // Lấy sản phẩm theo danh mục  nếu có giá trị sort truyền vào thì sẽ sắp xếp 
+        public function getByCategory($category_id, $limit = null, $sort = 'default') {
             global $conn;
             $sql = "SELECT p.*, c.name as category_name 
                     FROM Product p 
                     JOIN Category c ON c.id = p.category_id 
-                    WHERE p.category_id = $category_id 
-                    ORDER BY p.created_at DESC";
+                    WHERE p.category_id = $category_id";
+            
+            // Thêm điều kiện sắp xếp
+            switch($sort) {
+                case 'price_asc':
+                    $sql .= " ORDER BY p.sale_price ASC";
+                    break;
+                case 'price_desc':
+                    $sql .= " ORDER BY p.sale_price DESC";
+                    break;
+                default:
+                    $sql .= " ORDER BY p.created_at DESC";
+            }
             
             if($limit != null) {
                 $sql .= " LIMIT 0," . $limit;
             }
             return mysqli_query($conn, $sql);
         }
-    
+
         // Upload ảnh sản phẩm
         public function uploadImage($file, $old_image = null) {
             $target_dir = __DIR__ . "/../../../uploads/products/";

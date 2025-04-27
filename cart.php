@@ -118,7 +118,7 @@
                         <option value="0" <?php echo $shipping_fee == 0 ? 'selected' : ''; ?>>Free Ship Cái Đéo</option>
                     </select>
                     <p>CODE</p>
-                    <input id="code" name="code" placeholder="Nhập mã giảm giá" onclick="alert('Điền cái con c*c')">
+                    <input id="code" name="code" placeholder="Nhập mã giảm giá" onclick="alert('Chức năng chưa được phát triển')">
                     <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
                         <div class="col">TỔNG CỘNG</div>
                         <div class="col text-right"><?php echo number_format($total + $shipping_fee);?> VNĐ</div>
