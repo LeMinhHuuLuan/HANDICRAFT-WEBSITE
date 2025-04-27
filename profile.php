@@ -90,7 +90,7 @@ $orders = $orderController->getByUserId($user_id);
                                             <?php
                                                 if ($orders && mysqli_num_rows($orders) > 0) {
                                                     while($order = mysqli_fetch_assoc($orders)) {
-                                                        $statusClass = $order['status'] == 'Pending' ? 'text-warning' : 'text-success';
+                                                        $statusClass = $order['status'] == 'Đang xử lý' ? 'text-warning' : 'text-success';
                                                         // Tính tổng tiền từ chi tiết đơn hàng nếu không có total_amount trực tiếp
                                                         $details_result = $orderController->getOrderDetails($order['id']);
                                                         $total_amount = 0;

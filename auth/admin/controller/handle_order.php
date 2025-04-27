@@ -48,7 +48,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 
                 $id = (int)$_POST['id'];
                 $status = $_POST['status'];
-                $validStatuses = ['Pending', 'Approved'];
+                $validStatuses = [
+                    'Đang chờ xử lý',
+                    'Đã chấp thuận',
+                    'Bị từ chối',
+                    'Đang tiến hành',
+                    'Đã hoàn thành'
+                ];
                 
                 if (!in_array($status, $validStatuses)) {
                     echo json_encode(['success' => false, 'message' => 'Trạng thái không hợp lệ.']);

@@ -494,9 +494,12 @@
                             <input type="hidden" id="updateOrderId" name="id">
                             <div class="mb-3">
                                 <label for="updateOrderStatusSelect" class="form-label">Chọn trạng thái</label>
-                                <select class="form-select" id="updateOrderStatusSelect" name="status" required>
-                                    <option value="Pending">Đang xử lý</option>
-                                    <option value="Approved">Đã xác nhận</option>
+                                <select class="form-select" id="updateOrderStatusSelect" name="status">
+                                    <option value="Đang chờ xử lý">Đang chờ xử lý</option>
+                                    <option value="Đã chấp thuận">Đã chấp thuận</option>
+                                    <option value="Bị từ chối">Bị từ chối</option>
+                                    <option value="Đang tiến hành">Đang tiến hành</option>
+                                    <option value="Đã hoàn thành">Đã hoàn thành</option>
                                 </select>
                             </div>
                         </form>

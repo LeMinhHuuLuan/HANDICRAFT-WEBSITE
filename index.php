@@ -201,7 +201,10 @@
                         </div>
                         
                         <div class="home-product-item__sale-off">
-                            <span class="home-product-item__sale-off-percent">hot</span>
+                            <span class="home-product-item__sale-off-percent">-<?php
+                                $percent_sale= ($product['price'] - $product['sale_price']) / $product['price'] * 100;
+                                echo round($percent_sale);
+                            ?>%</span>
                         </div>
                         
                         <div class="header__cart-item-price-wrap">

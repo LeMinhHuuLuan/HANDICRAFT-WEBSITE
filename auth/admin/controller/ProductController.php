@@ -72,15 +72,33 @@
         public function deleteById($id) {
             global $conn;
 
-            // Lấy thông tin sản phẩm để xóa file ảnh
+            // Lấy thông tin sản phẩm để xóa các file ảnh
             $result = $this->getById($id);
             if ($result && mysqli_num_rows($result) > 0) {
                 $product = mysqli_fetch_assoc($result);
-                $image_path = __DIR__ . "/../../../" . $product['product_image'];
                 
-                // Kiểm tra và xóa file ảnh nếu tồn tại
-                if (file_exists($image_path)) {
-                    @unlink($image_path); // Thêm @ để tránh lỗi nếu không thể xóa file
+                // Xóa ảnh chính
+                if (!empty($product['product_image'])) {
+                    $image_path = __DIR__ . "/../../../" . $product['product_image'];
+                    if (file_exists($image_path)) {
+                        @unlink($image_path); // Xóa ảnh chính nếu tồn tại
+                    }
+                }
+                
+                // Xóa ảnh phụ 1
+                if (!empty($product['product_image_2'])) {
+                    $image_path_2 = __DIR__ . "/../../../" . $product['product_image_2'];
+                    if (file_exists($image_path_2)) {
+                        @unlink($image_path_2); // Xóa ảnh phụ 1 nếu tồn tại
+                    }
+                }
+                
+                // Xóa ảnh phụ 2
+                if (!empty($product['product_image_3'])) {
+                    $image_path_3 = __DIR__ . "/../../../" . $product['product_image_3'];
+                    if (file_exists($image_path_3)) {
+                        @unlink($image_path_3); // Xóa ảnh phụ 2 nếu tồn tại
+                    }
                 }
             }
 
